@@ -8,7 +8,7 @@ import './Home.css'
 const Home = () => {
     return (
         <div>
-         <h2 className='intro'>محصولات</h2>
+         <h2 className='intro'>Products</h2>
             <Row>
                 {Products.map((item)=>{
                     return(

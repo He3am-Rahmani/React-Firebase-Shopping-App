@@ -1,7 +1,21 @@
 .nav{
     background-color: rgb(115, 3, 150);
-    margin: 0;padding: 0;border: none;
+    width: 100%;
 }
 .pad{
-   padding: 32px;
+   padding: 5px 10px;
+}
+.logo>a{
+    color: #FFFF;
+    font-weight: 300;
+    text-decoration: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+.logo>a:hover{
+    color: #f3f3f383;
+    text-decoration: none;
+}
+.navbar{
+    margin-left: 5rem;
+    max-width: 890px; 
 }

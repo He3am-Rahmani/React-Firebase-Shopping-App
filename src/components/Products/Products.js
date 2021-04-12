@@ -1,17 +1,19 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import './Products.css'
+import { Link } from 'react-router-dom'
+
 
 function Products({ product }) {
   return (
     <div>
       <Card className='fit-cont'>
-        <a href={`/products/${product._id}`}>
+        <Link to={`/products/${product._id}`}>
           <Card.Img src={product.image} />
-        </a>
-        <a href={`/products/${product._id}`}>
+        </Link>
+        <Link to={`/products/${product._id}`} className='title'>
           <Card.Title>{product.name}</Card.Title>
-        </a>
+        </Link>
         <h4>Price : {product.price} </h4>
       </Card>
     </div>
