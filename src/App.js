@@ -9,6 +9,7 @@ import Product from './pages/Product/ProductPage'
 import "./App.css";
 import { Container } from "react-bootstrap";
 import nfPage from "./pages/404Page/nfPage";
+import Account from "./pages/Account/Account";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Switch>
           <Route path="/" component={Home} exact />
           <Route path='/products/:id' component={Product} />
+          <Route path='/account' component={Account} />
           <Route component={nfPage}/>
         </Switch>
       </Container>

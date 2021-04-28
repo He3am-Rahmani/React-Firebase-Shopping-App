@@ -1,0 +1,36 @@
+.input-group-od {
+  margin: 2rem 40%;
+  width: 100%;
+  padding: 0rem 6rem;
+}
+.login-logo {
+  margin: 5rem 45% 0 45%;
+}
+
+/* .login-btn:hover{
+    width: 150%;
+} */
+
+.login-btn {
+  outline: none;
+  width: 60%;
+  margin: 1rem auto;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 32px;
+  background-color: rgb(46, 145, 226);
+  color: #fff;
+}
+
+.login-btn:hover {
+  width: 100%;
+  transition: 1s width;
+  animation: width 3s ease-out 0s normal;
+  background-color: rgba(57, 95, 218, 0.76);
+}
+.login-btn:not(:hover) {
+  width: 60%;
+  transition: 1s width;
+  animation: width 3s ease-out 0s normal;
+}
+

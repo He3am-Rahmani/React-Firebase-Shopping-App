@@ -9,7 +9,7 @@
 }
 .links-404{
     margin: 1rem 40%;
-    border: 3px rgb(43, 169, 219) solid;
+    border: 3px rgb(12, 70, 179) solid;
     border-radius: 35px;
     padding: 16px ;
     color: rgb(58, 50, 50);
@@ -17,9 +17,9 @@
 }
 .links-404:hover{
     text-decoration: none;
-    background-color: rgb(5, 161, 161);
+    background-color: rgb(18, 60, 150);
     color: #fff;
-    border-color: rgb(43, 205, 211);
+    border-color: rgba(16, 60, 206, 0.842);
 }
 .header-title{
     margin: 1rem
