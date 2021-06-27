@@ -1,7 +1,12 @@
-.nav{
-    background-color: rgb(115, 3, 150);
+.nav-parent{
+    background-color: rgba(115, 3, 150,0.7);
     width: 100%;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 500;
 }
+
 .pad{
    padding: 5px 10px;
 }
@@ -14,8 +19,4 @@
 .logo>a:hover{
     color: #f3f3f383;
     text-decoration: none;
-}
-.navbar{
-    margin-left: 5rem;
-    max-width: 890px; 
 }

@@ -1,39 +1,13 @@
 import React from "react";
-import { Col, Container, FormControl, InputGroup, Row } from "react-bootstrap";
-import './Account.css'
+import "./Account.css";
+import { useAuth } from "../../contexts/AuthContext";
+import Login from "../../auth/Login";
+import Dashboard from "../../auth/Dashboard";
 
 const Account = () => {
-  return (
-    <div>
-      <Container>
-        <Row>
-            <h1 className='login-logo'>Login</h1>
-          <Col className='input-group-od'>
-            <InputGroup className='mb-3' >
-              <InputGroup.Prepend>
-                <FormControl placeholder='Username' />
-              </InputGroup.Prepend>
-            </InputGroup>
-            <InputGroup className='mb-3' >
-              <InputGroup.Prepend>
-                <FormControl placeholder='Email'/>
-              </InputGroup.Prepend>
-            </InputGroup>
-            <InputGroup className='mb-3' >
-              <InputGroup.Prepend>
-                <FormControl placeholder='Password' type='password' />
-              </InputGroup.Prepend>
-            </InputGroup>
-            <InputGroup>
-                <button className='login-btn'>
-                  Login
-                </button>
-            </InputGroup>
-          </Col>
-        </Row>
-      </Container>
-    </div>
-  );
+  const { currentUser } = useAuth();
+
+  return currentUser ? <Dashboard /> : <Login />;
 };
 
 export default Account;

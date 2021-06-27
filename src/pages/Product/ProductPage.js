@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Col, Row, Image, Button, ListGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import products from "../../products";
 import NfPage from "../404Page/nfPage";
+import { Alert } from "react-bootstrap";
 
 import "./ProductPage.css";
 
@@ -10,6 +11,12 @@ const ProductPage = ({ match }) => {
   const product = products.find((item) => {
     return item._id === match.params.id;
   });
+  const [message, setMessage] = useState("");
+
+  const addHandler = () => {
+    setMessage("Product Added To your Cart Successfully");
+  };
+
 
   let show = <NfPage />;
   if (!product) {
@@ -27,6 +34,7 @@ const ProductPage = ({ match }) => {
           </Col>
           <Col md="5">
             <ListGroup className="description" variant="flush">
+              {message && <Alert variant="success">{message}</Alert>}
               <ListGroup.Item>
                 <h2>{product.name}</h2>
               </ListGroup.Item>
@@ -41,7 +49,9 @@ const ProductPage = ({ match }) => {
             </ListGroup>
             <ListGroup className="description" variant="flush">
               <ListGroup.Item>
-                <Button className="btn btn-warning">Add To Cart</Button>
+                <Button className="btn btn-warning" onClick={addHandler}>
+                  Add To Cart
+                </Button>
               </ListGroup.Item>
             </ListGroup>
           </Col>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Nav, Navbar, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
@@ -6,7 +6,7 @@ import "./Header.css";
 
 const Header = () => {
   return (
-    <header className="nav">
+    <header className="nav-parent">
       <Navbar className="nav" variant="dark">
         <Container>
           <LinkContainer to="/">
