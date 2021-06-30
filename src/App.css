@@ -27,6 +27,18 @@
 .App-link {
   color: #61dafb;
 }
+/* .filter {
+  filter: invert(0.499) sepia(0.9) saturate(0%) hue-rotate(86deg)
+    grayscale(100%) brightness(100%) contrast(119%);
+} */
+.filter-nav:hover {
+  filter: invert(0.2) sepia(0.1) saturate(0.2) hue-rotate(0deg) grayscale()
+    brightness(100%) contrast(100%);
+}
+/* .filter-nav{
+    filter: invert(0.5) sepia(0.9) saturate(0%) hue-rotate(86deg) grayscale(100%)
+    brightness(100%) contrast(119%) blur(0.3px);
+} */
 
 @keyframes App-logo-spin {
   from {
@@ -34,5 +46,54 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+@font-face {
+  font-family: logo;
+  src: url("./Assets/fonts/GenesissRegularDemo-rg4Jp.otf") format("otf");
+  src: url("./Assets/fonts/Aquire-Light.woff2") format("woff2");
+  src: url("./Assets/fonts/Aquire.woff") format("woff");
+  src: url("./Assets/fonts/Aquire-Light.woff") format("woff");
+}
+.angry-animate {
+  -webkit-animation: change-color 5s ease-in-out 0s infinite normal;
+  -moz-animation: change-color 5s ease-in-out 0s infinite normal;
+  -ms-animation: change-color 5s ease-in-out 0s infinite normal;
+  animation: change-color 5s ease-in-out 0s infinite normal;
+}
+
+@-webkit-keyframes change-color {
+    0% {
+    color: #f9edfa;
+  }
+  25% {
+    color: #b494b6;
+  }
+  50% {
+    color: rgb(239, 210, 255);
+  }
+  75% {
+    color: rgb(234, 206, 255);
+  }
+  100% {
+    color: rgb(236, 200, 255);
+  }
+}
+
+@keyframes change-color {
+   0% {
+    color: #f9edfa;
+  }
+  25% {
+    color: #fcd2ff;
+  }
+  50% {
+    color: rgb(239, 210, 255);
+  }
+  75% {
+    color: rgb(234, 206, 255);
+  }
+  100% {
+    color: rgb(236, 200, 255);
   }
 }

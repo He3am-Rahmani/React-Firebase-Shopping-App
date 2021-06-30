@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 
 import "./Footer.css";
 
@@ -22,10 +22,10 @@ const Footer = () => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <footer className="footer">
         <Col>
-          <h4>
+          <h4 id="connect">
             Stay Connect With Us <i className="fa fa-heart"></i>{" "}
             <i className="fa fa-arrow-down"></i>
           </h4>
@@ -73,7 +73,7 @@ const Footer = () => {
               <Col>
                 <Link
                   className="footer-links"
-                  onClick={(event) => scrollTop({ type: "home", to: 0 })}
+                  onClick={() => scrollTop({ type: "home", to: 0 })}
                   to="/"
                 >
                   Home &gt;
@@ -82,20 +82,28 @@ const Footer = () => {
               <Col>
                 <Link
                   className="footer-links"
-                  onClick={(event) => scrollTop({ type: "prod", to: 20 })}
+                  onClick={() => scrollTop({ type: "prod", to: 20 })}
                   to="/"
                 >
                   Products &gt;
                 </Link>
               </Col>
               <Col>
-                <Link className="footer-links" to="/contact">
+                <Link
+                  className="footer-links"
+                  onClick={() => scrollTop({ type: "home", to: 0 })}
+                  to="/contact"
+                >
                   Contact Us &gt;
                 </Link>
               </Col>
 
               <Col>
-                <Link className="footer-links" to="/about">
+                <Link
+                  className="footer-links"
+                  onClick={() => scrollTop({ type: "home", to: 0 })}
+                  to="/about"
+                >
                   About Us &gt;
                 </Link>
               </Col>
@@ -103,7 +111,7 @@ const Footer = () => {
           </div>
         </Col>
       </footer>
-    </React.Fragment>
+    </>
   );
 };
 

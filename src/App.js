@@ -1,12 +1,16 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Home from "./pages/Home/Home";
 import Product from "./pages/Product/ProductPage";
 
-import "./App.css";
 import { Container } from "react-bootstrap";
 import nfPage from "./pages/404Page/nfPage";
 import Account from "./pages/Account/Account";
@@ -18,14 +22,24 @@ import ForgotPassword from "./auth/ForgotPassword";
 import UpdateProfile from "./auth/UpdateProfile";
 import { AuthProvider } from "./contexts/AuthContext";
 import Dashboard from "./auth/Dashboard";
+import adminLogin from "./pages/Admin/Admin-login/adminLogin";
+import adminDash from "./pages/Admin/Admin-Dashboard/adminDash";
+import ContactUs from "./pages/ContactUs/ContactUs";
+import "./App.css";
+import About from "./pages/About/About";
+import Layout from "./components/Layout/Layout";
 
 const App = () => {
   return (
     <Router>
-      <div className="d-flex flex-column justify-content-between " style={{minHeight:'100vh'}}>
-        <Header />
-        <Container>
-          <AuthProvider>
+      <div
+        className="d-flex flex-column justify-content-between "
+        style={{ minHeight: "100vh" }}
+      >
+        <AuthProvider>
+          {/* <Header /> */}
+          {/* <Container id="main-cont"> */}
+          <Layout>
             <Switch>
               <PrivateRoute path="/update-profile" component={UpdateProfile} />
               <Route path="/" component={Home} exact />
@@ -34,14 +48,20 @@ const App = () => {
               <Route path="/forgot-password" component={ForgotPassword} />
               <Route path="/products/:id" component={Product} />
               <Route path="/account" component={Account} />
-              <PrivateRoute path="/cart" component={Cart} exact />
+              <PrivateRoute path="/cart/:id?" component={Cart} exact />
+              <Route path="/admin/login" component={adminLogin} />
               <PrivateRoute component={Dashboard} path="/dashboard" exact />
+              <Route path="/admin/dashboard/" component={adminDash} />
+              <Redirect from="/admin" to="/admin/login/" />
+              <PrivateRoute path="/contact" component={ContactUs} />
               {/* <Route exact path="/cart" component={Cart} /> */}
+              <Route path="/about" component={About} />
               <Route component={nfPage} />
             </Switch>
-          </AuthProvider>
-        </Container>
-        <Footer />
+          </Layout>
+          {/* </Container> */}
+        </AuthProvider>
+        {/* <Footer /> */}
       </div>
     </Router>
   );

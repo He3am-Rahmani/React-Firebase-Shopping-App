@@ -1,5 +1,5 @@
 .nav-parent{
-    background-color: rgba(115, 3, 150,0.7);
+    background-color: #702fb1c6;
     width: 100%;
     position: sticky;
     top: 0;
@@ -14,8 +14,9 @@
     color: #FFFF;
     font-weight: 300;
     text-decoration: none;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+    font-family: logo;
 }
+
 .logo>a:hover{
     color: #f3f3f383;
     text-decoration: none;

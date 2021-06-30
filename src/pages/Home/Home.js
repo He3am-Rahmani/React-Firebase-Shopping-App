@@ -1,25 +1,68 @@
-import React from 'react'
-import { Row,Col } from 'react-bootstrap'
+import React, { useEffect, useState } from "react";
 
-import Products from '../../products'
-import ProductComp from '../../components/Products/Products'
-import './Home.css'
+import { useDispatch, useSelector } from "react-redux";
+import { productListAction } from "../../action/ProductAction";
+import "./Home.css";
+import ShowingProducts from "./ShowingProducts";
 
-const Home = () => {
-    return (
-        <div id='product'>
-         <h2 className='intro'>Products</h2>
-            <Row>
-                {Products.map((item)=>{
-                    return(
-                        <Col sm='12' md='6' lg='4' >
-                            <ProductComp product={item} />
-                        </Col>
-                    )
-                })}
-            </Row>
-        </div>
-    )
-}
+const Home = ({ history }) => {
+  const dispatch = useDispatch();
 
-export default Home
+  const { loading, products } = useSelector((state) => state.productList);
+  const [keyword, setKeyword] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(6);
+  let View;
+
+  // const callDispatch = async () => {
+  //   await
+  // };
+  
+  useEffect(() => {
+    dispatch(productListAction());
+    // callDispatch();
+  }, [dispatch]);
+
+  if (products.type === "failed" || products.length === 0) {
+    View = (
+      <>
+        <h1>Status Code 500 </h1> <p>Server Internal Error</p>
+      </>
+    );
+  } else {
+    let filterdProducts = products.filter((product) =>
+      keyword === ""
+        ? product
+        : product.name.toLowerCase().includes(keyword.toLocaleLowerCase())
+    );
+
+    const paginate = (pageNumber) => {
+      setCurrentPage(pageNumber);
+
+      window.scrollTo({ behavior: "smooth", top: 0 });
+    };
+
+    const beforFilterPostNumber = filterdProducts.length;
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    filterdProducts = filterdProducts.slice(indexOfFirstPost, indexOfLastPost);
+
+    View = (
+      <ShowingProducts
+        products={products}
+        keyword={keyword}
+        setKeyword={setKeyword}
+        setCurrentPage={setCurrentPage}
+        loading={loading}
+        filterdProducts={filterdProducts}
+        paginate={paginate}
+        beforFilterPostNumber={beforFilterPostNumber}
+        postsPerPage={postsPerPage}
+      />
+    );
+  }
+
+  return View;
+};
+
+export default Home;

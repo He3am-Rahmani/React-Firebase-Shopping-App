@@ -1,0 +1,416 @@
+ {/* <Dropdown.Item
+                onClick={() => {
+                  setOperation("DELETE_PRODUCT");
+                }}
+                style={{
+                  color: "#fff",
+                  width: "100%",
+                  margin: 0,
+                  marginTop: "3px",
+                  padding: "0",
+                }}
+                className="btn btn-dark view-btn"
+              >
+                <Button
+                  variant="dark"
+                  style={{
+                    width: "100%",
+                    color: "#FFF",
+                    backgroundColor: "#D00000",
+                  }}
+                >
+                  Delete Product
+                </Button>
+              </Dropdown.Item> */}
+
+
+
+////////////////
+
+
+
+
+        // <Form variant="white">
+        //   <h2>Add Discount</h2>
+        //   {error && <Alert variant="danger">{error}</Alert>}
+        //   {message && <Alert variant="success">{message}</Alert>}
+        //   <Form.Group id="name">
+        //     <Form.Label>Name</Form.Label>
+        //     <Form.Control type="text" ref={addDiscNameRef} required />
+        //   </Form.Group>
+        //   <Form.Label>{perRange}%</Form.Label>
+        //   <RangeSlider
+        //     type="range"
+        //     value={perRange}
+        //     onChange={(e) => {
+        //       setPerRange(e.target.value);
+        //     }}
+        //   ></RangeSlider>
+        //   <Button onClick={addDiscHandler} className="w-100">
+        //     ADD Discount
+        //   </Button>
+        // </Form>
+
+
+        ///////////////////////
+
+
+                // <ListGroup variant="flush">
+        //   <h2>Active Discounts</h2>
+        //   {error && <Alert variant="danger">{error}</Alert>}
+        //   {message && <Alert variant="success">{message}</Alert>}
+        //   <ListGroup.Item>
+        //     <Row></Row>
+        //   </ListGroup.Item>
+
+        //   {disList.length ? (
+        //     disList.map((item) => (
+        //       <ListGroup.Item>
+        //         <Row>
+        //           <Col style={{ textAlign: "right" }} md={12}>
+        //             <Button
+        //               onClick={() => delDisHandler(item._id)}
+        //               type="button"
+        //               variant="light"
+        //             >
+        //               <i className="fa fa-trash"></i>
+        //             </Button>
+        //           </Col>
+        //           <Col md={5}>
+        //             <i>
+        //               <strong>Name:</strong>
+        //             </i>
+        //           </Col>
+        //           <Col md={5}>{item.name}</Col>{" "}
+        //           <Col md={5}>
+        //             <i>
+        //               <strong>Value:</strong>
+        //             </i>
+        //           </Col>
+        //           <Col md={5}>{item.value}</Col>{" "}
+        //         </Row>
+        //       </ListGroup.Item>
+        //     ))
+        //   ) : (
+        //     <h2>There Is Not Any Active Discount Code</h2>
+        //   )}
+        // </ListGroup>
+
+        ////////////////////////////////////////////////////////////////
+
+
+
+                // <ListGroup variant="flush">
+        //   <h2>Reports</h2>
+        //   {error && <Alert variant="danger">{error}</Alert>}
+        //   {message && <Alert variant="success">{message}</Alert>}
+        //   <ListGroup.Item>
+        //     <Row></Row>
+        //   </ListGroup.Item>
+
+        //   {ticket.length ? (
+        //     ticket.map((item) => (
+        //       <ListGroup.Item>
+        //         <Row>
+        //           <Col style={{ textAlign: "right" }} md={12}>
+        //             <Button
+        //               onClick={() => delTicketHandler(item._id)}
+        //               type="button"
+        //               variant="light"
+        //             >
+        //               <i className="fa fa-trash"></i>
+        //             </Button>
+        //           </Col>
+        //           <Col md={5}>
+        //             <i>
+        //               <strong>Name:</strong>
+        //             </i>
+        //           </Col>
+        //           <Col md={5}>{item.name}</Col>{" "}
+        //           <Col md={5}>
+        //             <i>
+        //               <strong>Email:</strong>
+        //             </i>
+        //           </Col>
+        //           <Col md={5}>{item.email}</Col>{" "}
+        //           <Col md={5}>
+        //             <i>
+        //               <strong>Subject:</strong>
+        //             </i>
+        //           </Col>
+        //           <Col md={5}>{item.subject}</Col>{" "}
+        //           <Col md={5}>
+        //             <i>
+        //               <strong>Message:</strong>
+        //             </i>
+        //           </Col>
+        //           <Col md={5}>{item.message}</Col>
+        //         </Row>
+        //       </ListGroup.Item>
+        //     ))
+        //   ) : (
+        //     <h2>There Is Not Any Report </h2>
+        //   )}
+        // </ListGroup>
+
+
+        //////////////////////////
+
+
+              // <Form variant="white">
+      //   <h2>Remove Admin</h2>
+      //   {error && <Alert variant="danger">{error}</Alert>}
+      //   {message && <Alert variant="success">{message}</Alert>}
+      //   <Form.Group id="username">
+      //     <Form.Label>Username</Form.Label>
+      //     <Form.Control type="text" ref={delAdminRef} required />
+      //   </Form.Group>
+      //   <Button onClick={removeAdminHandler} className="w-100 btn-danger">
+      //     Remove
+      //   </Button>
+      // </Form>
+
+
+      ////////////////////////
+
+            // <Form variant="white">
+      //   <h2>Add New Admin</h2>
+      //   {error && <Alert variant="danger">{error}</Alert>}
+      //   {message && <Alert variant="success">{message}</Alert>}
+      //   <Form.Group id="name">
+      //     <Form.Label>Name</Form.Label>
+      //     <Form.Control type="text" ref={addAdminNameRef} required />
+      //   </Form.Group>
+      //   <Form.Group id="userName">
+      //     <Form.Label>Username</Form.Label>
+      //     <Form.Control type="text" ref={adminUserNameRef} required />
+      //   </Form.Group>
+      //   <Form.Group id="role">
+      //     <Form.Label>Role</Form.Label>
+      //     <Form.Control as="select" ref={adminRoleRef} required>
+      //       <option value="Admin">Admin</option>
+      //       {adminInfo.role === "Senior Admin" ? (
+      //         <option value="Head Admin">Head Admin</option>
+      //       ) : (
+      //         <></>
+      //       )}
+      //     </Form.Control>
+      //   </Form.Group>
+      //   <Form.Group id="password">
+      //     <Form.Label>Password</Form.Label>
+      //     <Form.Control type="password" ref={adminPassRef} required />
+      //   </Form.Group>
+      //   <Button onClick={addAdminHandler} className="w-100">
+      //     ADD Admin
+      //   </Button>
+      // </Form>
+
+///////////////////////////////////////////////////
+
+
+          // <ListGroup variant="flush">
+      //   <h2>View Admins</h2>
+      //   {adminList.map((item) => (
+      //     <ListGroup.Item>
+      //       <Row>
+      //         <Col md={4}>
+      //           <i>
+      //             <strong>Name: </strong>
+      //             {item.name}
+      //           </i>
+      //         </Col>
+      //         <Col md={4}>
+      //           <i>
+      //             <strong>UserName: </strong>
+      //             {item.userName}
+      //           </i>
+      //         </Col>
+      //         <Col md={4}>
+      //           <i>
+      //             <strong>Role: </strong>
+      //             {item.role}
+      //           </i>
+      //         </Col>
+      //         <Col md={4}>
+      //           <i>
+      //             <strong>Password: </strong>
+      //             {item.password}
+      //           </i>
+      //         </Col>
+      //         <Col md={4}>
+      //           <i>
+      //             <strong>AddedBy: </strong>
+      //             {item.createdBy}
+      //           </i>
+      //         </Col>
+      //         <Col md={4}>
+      //           <i>
+      //             <strong>Creator Role: </strong>
+      //             {item.creatorRole}
+      //           </i>
+      //         </Col>
+      //       </Row>
+      //     </ListGroup.Item>
+      //   ))}
+      // </ListGroup>
+
+
+
+///////////////////////////////////////////////////
+
+            // <Form variant="white">
+      //   <h2>Edit Product</h2>
+      //   {error && <Alert variant="danger">{error}</Alert>}
+      //   {message && <Alert variant="success">{message}</Alert>}
+      //   <Form.Group id="name">
+      //     <Form.Label>Name</Form.Label>
+      //     <Form.Control
+      //       type="text"
+      //       defaultValue={selectedProduct.name}
+      //       ref={updateNameRef}
+      //       placeholder="Leave Blank For Same"
+      //       required
+      //     />
+      //   </Form.Group>
+      //   <Form.Group id="price">
+      //     <Form.Label>Price</Form.Label>
+      //     <Form.Control
+      //       type="text"
+      //       defaultValue={selectedProduct.price}
+      //       ref={updatePriceRef}
+      //       placeholder="Leave Blank For Same"
+      //       required
+      //     />
+      //   </Form.Group>
+      //   <Form.Group id="image">
+      //     <Form.Label>Image</Form.Label>
+      //     <Form.Control
+      //       type="text"
+      //       defaultValue={selectedProduct.image}
+      //       ref={updateImageRef}
+      //       placeholder="Leave Blank For Same"
+      //       required
+      //     />
+      //   </Form.Group>
+      //   <Form.Group id="Description">
+      //     <Form.Label>Description</Form.Label>
+      //     <Form.Control
+      //       type="text"
+      //       defaultValue={selectedProduct.description}
+      //       ref={updateDescRef}
+      //       placeholder="Leave Blank For Same"
+      //       required
+      //     />
+      //   </Form.Group>
+      //   <Row
+      //     className="w-100 d-flex"
+      //     style={{ gap: "1rem", justifyContent: "space-around" }}
+      //   >
+      //     <Button
+      //       variant="danger"
+      //       onClick={() => {
+      //         setOperation("VIEW_PRODUCTS");
+      //       }}
+      //       style={{ width: "45%" }}
+      //     >
+      //       Cancel
+      //     </Button>
+      //     <Button
+      //       onClick={() => updateProdHandler(selectedProduct._id)}
+      //       style={{ width: "45%" }}
+      //     >
+      //       Update
+      //     </Button>
+      //   </Row>
+      // </Form>
+
+
+
+///////////////////////////////////////////////////
+
+
+            // (
+      //   <ListGroup variant="flush">
+      //     <h2>View & Edit Products</h2>
+
+      //     {products.map((item) => (
+      //       <ListGroup.Item key={item.product}>
+      //         <Row>
+      //           <Col md={2}>
+      //             <Image src={item.image} alt={item.name} fluid rounded />
+      //           </Col>
+      //           <Col md={3}>{item.name}</Col>
+      //           <Col md={3}>{item.price} Mil</Col>
+      //           <Col md={2}></Col>
+      //           <Col md={1}>
+      //             <i
+      //               onClick={() => {
+      //                 setSelectedProduct(item);
+      //                 setOperation("EDIT_PRODUCTS");
+      //               }}
+      //               style={{ cursor: "pointer" }}
+      //               className="text-primary fa fa-edit"
+      //             ></i>
+      //           </Col>
+      //         </Row>
+      //       </ListGroup.Item>
+      //     ))}
+      //   </ListGroup>
+      // );
+
+////////////////////////////////////
+
+        // (
+      //   <Form variant="white">
+      //     <h2>Add New Product</h2>
+      //     {error && <Alert variant="danger">{error}</Alert>}
+      //     {message && <Alert variant="success">{message}</Alert>}
+      //     <Form.Group id="name">
+      //       <Form.Label>Name</Form.Label>
+      //       <Form.Control type="text" ref={addNameRef} required />
+      //     </Form.Group>
+      //     <Form.Group id="price">
+      //       <Form.Label>Price</Form.Label>
+      //       <Form.Control type="text" ref={priceRef} required />
+      //     </Form.Group>
+      //     <Form.Group id="image">
+      //       <Form.Label>Image</Form.Label>
+      //       <Form.Control type="text" ref={imageRef} required />
+      //     </Form.Group>
+      //     <Form.Group id="Description">
+      //       <Form.Label>Description</Form.Label>
+      //       <Form.Control type="text" ref={DescRef} required />
+      //     </Form.Group>
+      //     <Button onClick={addProductHandler} className="w-100">
+      //       ADD
+      //     </Button>
+      //   </Form>
+      // );
+
+
+/////////////////////////////
+
+          // case "DELETE_PRODUCT":
+    //   vue = (
+    //     <DeleteProduct
+    //       message={message}
+    //       error={error}
+    //       removeProductHandler={removeProductHandler}
+    //       refs={{ delNameRef: delNameRef }}
+    //     />
+    //   );
+    //  (
+    //   <Form variant="white">
+    //     <h2>Delete Product</h2>
+    //     {error && <Alert variant="danger">{error}</Alert>}
+    //     {message && <Alert variant="success">{message}</Alert>}
+    //     <Form.Group id="name">
+    //       <Form.Label>Name</Form.Label>
+    //       <Form.Control type="text" ref={delNameRef} required />
+    //     </Form.Group>
+    //     <Button onClick={removeProductHandler} className="w-100 btn-danger">
+    //       Delete
+    //     </Button>
+    //   </Form>
+    // );
+    // break;

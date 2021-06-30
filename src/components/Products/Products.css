@@ -1,11 +1,17 @@
-.fit-cont{
-    /* padding: 1rem; */
-    margin: 1rem;
+.fit-cont {
+  /* padding: 1rem; */
+  margin: 1rem;
 }
-.title:hover{
-    text-decoration: none;
+.title {
+  color: #3c00ff;
+  font-size: 1.5rem;
+  font-weight: 400px;
 }
-.product-card-description{
-   padding: 1rem;
-   background-color: azure;
+.title:hover {
+  text-decoration: none;
+  color: #009dff;
+}
+.product-card-description {
+  padding: 1rem;
+  background-color: azure;
 }

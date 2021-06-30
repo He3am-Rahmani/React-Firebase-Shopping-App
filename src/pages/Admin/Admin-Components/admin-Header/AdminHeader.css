@@ -1,0 +1,23 @@
+#nav{
+    background-color: #313131;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 500;
+}
+
+.pad{
+   padding: 5px 10px;
+}
+.logo>a{
+    color: #FFFF;
+    font-weight: 300;
+    text-decoration: none;
+    font-family: logo;
+}
+
+.logo>a:hover{
+    color: #f3f3f383;
+    text-decoration: none;
+}

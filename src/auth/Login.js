@@ -8,6 +8,7 @@ export default function Login() {
   const passwordRef = useRef();
   const { login } = useAuth();
   const [error, setError] = useState("");
+  const [message,setMessage]= useState('')
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
@@ -18,7 +19,11 @@ export default function Login() {
       setError("");
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
-      history.push("/");
+      setMessage('Logged In Redirect Operation ...')
+      setTimeout(()=>{
+        history.push("/");
+
+      },2300)
     } catch {
       setError("Failed to log in");
     }
@@ -33,6 +38,7 @@ export default function Login() {
           <Card.Body>
             <h2 className="text-center mb-4">Log In</h2>
             {error && <Alert variant="danger">{error}</Alert>}
+            {message && <Alert variant="success">{message}</Alert>}
             <Form onSubmit={handleSubmit}>
               <Form.Group id="email">
                 <Form.Label>Email</Form.Label>
