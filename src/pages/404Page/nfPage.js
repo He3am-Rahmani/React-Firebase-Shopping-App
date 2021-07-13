@@ -13,8 +13,8 @@ const NfPage = () => {
           className="links-404"
           to="/"
           onClick={() => {
-            document.querySelector("#main-cont").classList = "container";
-            document.querySelector(".footer").style.marginTop = "6rem";
+            document.querySelector("#main-cont").className = "container";
+            document.querySelector("footer").style.marginTop = "6rem";
           }}
         >
           Take Me Home Pleasss!!!!!

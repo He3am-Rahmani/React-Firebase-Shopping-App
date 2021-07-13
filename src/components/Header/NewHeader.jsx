@@ -7,8 +7,13 @@ import { useHistory } from "react-router";
 import myPic from "../../Assets/images/myPic.png";
 import { Container } from "react-bootstrap";
 
-const NewHeader = () => {
-  const { currentUser } = useAuth();
+const NewHeader = ({ currentUser, setCurrentUser }) => {
+  // const { currentUser }= useAuth();
+
+  // const [ currentUser, setCurrentUser]  = useState(useAuth().currentUser);
+
+  // console.log(currentUser);
+  // console.log(user);
 
   const history = useHistory();
 
@@ -19,22 +24,27 @@ const NewHeader = () => {
 
       case "/about":
         return 1;
-
       case "/contact":
         return 2;
       case "/cart":
         return 3;
-      case "/account":
+      case "/dashboard":
+        return 4;
+      case "/login":
+        return 4;
+      case "/signup":
+        return 4;
+      case "/update-profile":
         return 4;
       default:
-        return 0;
+        return null;
     }
   };
 
   const [NavItems, setNavItems] = useState({
     currentActive: current(),
     items: [
-      { name: "Home", to: "/", isActive: true },
+      { name: "Home", to: "/" },
       {
         name: "About Us",
         to: "/about",
@@ -46,7 +56,7 @@ const NewHeader = () => {
       { name: "Cart", to: "/cart" },
       {
         name: currentUser ? currentUser.displayName : "Login/Sign-Up",
-        to: currentUser ? "/account" : "login",
+        to: currentUser ?  "/dashboard" : "/login",
         isAvatar: currentUser ? currentUser.photoURL || myPic : myPic,
       },
     ],
@@ -65,7 +75,9 @@ const NewHeader = () => {
       marginBottom: "2rem",
     },
     active: {
+      color: "#000",
       borderBottom: "2px solid #000",
+      paddingBottom:'5px',
     },
     navItem: {
       display: "flex",
@@ -80,14 +92,18 @@ const NewHeader = () => {
       justifyContent: "space-between",
     },
     logo: {
-      fontWeight: "600",
-      fontSize: "2rem",
+      fontWeight: "500",
+      fontSize: "2.5rem",
       fontFamily: "logo",
       "&:hover": {
         textDecoration: "none",
       },
     },
-    "login": {
+    login: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
       borderLeft: "solid 1px #cccccc",
       position: "relative",
       left: "1rem",
@@ -111,11 +127,10 @@ const NewHeader = () => {
                   setNavItems({ ...NavItems, currentActive: index });
                 }}
                 key={index}
-                isActive={item.isActive}
                 to={item.to}
-                className={
-                  `${index === NavItems.currentActive ? styles.active : null} ${item.isAvatar ? styles.login : null}  `
-                }
+                className={`${
+                  index === NavItems.currentActive ? styles.active : null
+                } ${item.isAvatar ? styles.login : null}  `}
               >
                 {item.name}
               </Button>

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { createUseStyles } from "react-jss";
 
 
+
 export const Button = ({ to, children, className, onClick, isAvatar }) => {
   const useStyles = createUseStyles({
     button: {
@@ -24,10 +25,14 @@ export const Button = ({ to, children, className, onClick, isAvatar }) => {
       width: "25px",
       height: "25px",
       marginRight: "5px",
+      borderRadius: "25px"
     },
   });
 
+
   const styles = useStyles();
+
+
 
   return (
     <>

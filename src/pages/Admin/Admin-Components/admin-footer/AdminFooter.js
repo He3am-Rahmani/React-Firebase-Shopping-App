@@ -6,8 +6,8 @@ import "./AdminFooter.css";
 
 const AdminFooter = ({ adminInfo }) => {
   return (
-    <React.Fragment>
-      <footerr className="footer">
+    <>
+      <footer className="footer">
         <Col>
           <div className="footer-display">
             <Col>
@@ -25,8 +25,8 @@ const AdminFooter = ({ adminInfo }) => {
             </Col>
           </div>
         </Col>
-      </footerr>
-    </React.Fragment>
+      </footer>
+    </>
   );
 };
 

@@ -28,7 +28,7 @@ export default function AdminLogin() {
 
     try {
       axios
-        .post("http://localhost:8000/api/admin/login", data)
+        .post("https://rocky-lake-08170.herokuapp.com/api/admin/login", data)
         .then((response) => {
           const adminId = response.data.data.id;
           if (adminId) {
@@ -38,7 +38,7 @@ export default function AdminLogin() {
                 `Welcome ${response.data.data.role} ${response.data.data.userName} Redirect Operation In 3 Second`
               );
               axios
-                .post("http://localhost:8000/api/tocken/new", {
+                .post("https://rocky-lake-08170.herokuapp.com/api/tocken/new", {
                   apiKey: process.env.REACT_APP_API_KEY,
                   key: Date.now().toString(),
                   admin: adminId,

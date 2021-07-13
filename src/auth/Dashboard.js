@@ -15,7 +15,7 @@ export default function Dashboard() {
     try {
       await logout();
       history.push("/login");
-    } catch {
+    } catch(e) {
       setError("Failed to log out");
     }
   }
@@ -43,7 +43,7 @@ export default function Dashboard() {
                   style={{
                     width: "100px",
                     height: "100px",
-                    marginleft: "5px",
+                    marginLeft: "5px",
                     textAlign: "center",
                   }}
                   roundedCircle

@@ -1,6 +1,6 @@
 import React from "react";
 import { ListGroup, Row, Col, Alert, Button, Form } from "react-bootstrap";
-import RangeSlider from "react-bootstrap-range-slider";
+import { createUseStyles } from "react-jss";
 
 export const ViewAndDeleteDiscounts = ({
   error,
@@ -18,7 +18,7 @@ export const ViewAndDeleteDiscounts = ({
       </ListGroup.Item>
 
       {disList.length ? (
-        disList.map((item,index) => (
+        disList.map((item, index) => (
           <ListGroup.Item key={index}>
             <Row>
               <Col style={{ textAlign: "right" }} md={12}>
@@ -60,6 +60,11 @@ export const AddDiscount = ({
   setPerRange,
   addDiscHandler,
 }) => {
+
+  const useStyles = createUseStyles({range:{margin:'0 0 2rem 0'}})
+
+  const styles = useStyles();
+
   return (
     <Form variant="white">
       <h2>Add Discount</h2>
@@ -70,13 +75,14 @@ export const AddDiscount = ({
         <Form.Control type="text" ref={refs.addDiscNameRef} required />
       </Form.Group>
       <Form.Label>{perRange}%</Form.Label>
-      <RangeSlider
+      <Form.Control
+        className={styles.range}
         type="range"
         value={perRange}
         onChange={(e) => {
           setPerRange(e.target.value);
         }}
-      ></RangeSlider>
+      />
       <Button onClick={addDiscHandler} className="w-100">
         ADD Discount
       </Button>

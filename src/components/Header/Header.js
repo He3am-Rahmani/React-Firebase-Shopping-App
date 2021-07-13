@@ -8,6 +8,7 @@ import myPic from "../../Assets/images/myPic.png";
 
 import "./Header.css";
 
+
 const Header = () => {
   const { currentUser } = useAuth();
 

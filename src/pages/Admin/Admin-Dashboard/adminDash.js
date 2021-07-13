@@ -74,7 +74,7 @@ export default function AdminDash({ history, match }) {
     dispatch(productListAction());
 
     axios
-      .post(`http://localhost:8000/api/tocken/get-admin/`, {
+      .post(`https://rocky-lake-08170.herokuapp.com/api/tocken/get-admin/`, {
         url: history.location.state,
       })
       .then((response) => {
@@ -86,7 +86,7 @@ export default function AdminDash({ history, match }) {
       });
 
     axios
-      .post(`http://localhost:8000/api/admin/get-admins`, {
+      .post(`https://rocky-lake-08170.herokuapp.com/api/admin/get-admins`, {
         key: process.env.REACT_APP_API_KEY,
       })
       .then((response) => {
@@ -94,7 +94,7 @@ export default function AdminDash({ history, match }) {
       });
 
     axios
-      .post(`http://localhost:8000/api/ticket/get-all`, {
+      .post(`https://rocky-lake-08170.herokuapp.com/api/ticket/get-all`, {
         key: process.env.REACT_APP_API_KEY,
       })
       .then((response) => {
@@ -105,7 +105,7 @@ export default function AdminDash({ history, match }) {
       });
 
     axios
-      .post(`http://localhost:8000/api/discount/get-all`, {
+      .post(`https://rocky-lake-08170.herokuapp.com/api/discount/get-all`, {
         key: process.env.REACT_APP_API_KEY,
       })
       .then((response) => {
@@ -136,7 +136,7 @@ export default function AdminDash({ history, match }) {
       setError("Please Fill Out All Filds For This Operation");
     } else {
       axios
-        .post(`http://localhost:8000/api/products/create`, {
+        .post(`https://rocky-lake-08170.herokuapp.com/api/products/create`, {
           key: process.env.REACT_APP_API_KEY,
           name: addNameRef.current.value.trim(),
           image: imageRef.current.value.trim(),
@@ -157,7 +157,7 @@ export default function AdminDash({ history, match }) {
   const removeProductHandler = (productName, removedItemComponent, index) => {
     // removing without refresh TEST HERE
     axios
-      .post(`http://localhost:8000/api/products/remove`, {
+      .post(`https://rocky-lake-08170.herokuapp.com/api/products/remove`, {
         key: process.env.REACT_APP_API_KEY,
         name: productName,
       })
@@ -219,7 +219,7 @@ export default function AdminDash({ history, match }) {
     console.log(name, price, image, description);
 
     axios
-      .put(`http://localhost:8000/api/products/update`, {
+      .put(`https://rocky-lake-08170.herokuapp.com/api/products/update`, {
         key: process.env.REACT_APP_API_KEY,
         prodId: id,
         name: name,
@@ -248,7 +248,7 @@ export default function AdminDash({ history, match }) {
       setError("Please Fill Out All Filds For This Operation");
     } else {
       axios
-        .post(`http://localhost:8000/api/admin/create`, {
+        .post(`https://rocky-lake-08170.herokuapp.com/api/admin/create`, {
           key: process.env.REACT_APP_API_KEY,
           name: addAdminNameRef.current.value.trim(),
           role: adminRoleRef.current.value.trim(),
@@ -260,7 +260,7 @@ export default function AdminDash({ history, match }) {
         .then((response) => {
           if (response.data.message.type === "success") {
             axios
-              .post(`http://localhost:8000/api/admin/get-admins`, {
+              .post(`https://rocky-lake-08170.herokuapp.com/api/admin/get-admins`, {
                 key: process.env.REACT_APP_API_KEY,
               })
               .then((response) => {
@@ -283,7 +283,7 @@ export default function AdminDash({ history, match }) {
       );
     } else {
       axios
-        .post(`http://localhost:8000/api/admin/remove/`, {
+        .post(`https://rocky-lake-08170.herokuapp.com/api/admin/remove/`, {
           key: process.env.REACT_APP_API_KEY,
           userName: delAdminRef.current.value,
           controllerAdmin: adminInfo.userName,
@@ -292,7 +292,7 @@ export default function AdminDash({ history, match }) {
           console.log(response);
           if (response.data.message.type === "success") {
             axios
-              .post(`http://localhost:8000/api/admin/get-admins/`, {
+              .post(`https://rocky-lake-08170.herokuapp.com/api/admin/get-admins/`, {
                 key: process.env.REACT_APP_API_KEY,
               })
               .then((response) => {
@@ -309,7 +309,7 @@ export default function AdminDash({ history, match }) {
 
   const delTicketHandler = (id) => {
     axios
-      .post(`http://localhost:8000/api/ticket/del`, {
+      .post(`https://rocky-lake-08170.herokuapp.com/api/ticket/del`, {
         key: process.env.REACT_APP_API_KEY,
         id: id,
       })
@@ -336,7 +336,7 @@ export default function AdminDash({ history, match }) {
           setError("Fill Out Fields");
         } else {
           axios
-            .post(`http://localhost:8000/api/discount/create`, {
+            .post(`https://rocky-lake-08170.herokuapp.com/api/discount/create`, {
               key: process.env.REACT_APP_API_KEY,
               name: addDiscNameRef.current.value.trim(),
               value: perRange,
@@ -356,7 +356,7 @@ export default function AdminDash({ history, match }) {
 
   const delDisHandler = (id) => {
     axios
-      .post(`http://localhost:8000/api/discount/remove`, {
+      .post(`https://rocky-lake-08170.herokuapp.com/api/discount/remove`, {
         key: process.env.REACT_APP_API_KEY,
         id: id,
       })
@@ -375,7 +375,7 @@ export default function AdminDash({ history, match }) {
     document.querySelector("#nav-p").style.display = "block";
     document.querySelector("footer").style.display = "block";
     document.querySelector("#main-cont").classList = "container";
-    axios.put(`http://localhost:8000/api/tocken/used/${match.params.tocken}`);
+    axios.put(`https://rocky-lake-08170.herokuapp.com/api/tocken/used/${match.params.tocken}`);
     history.push("/admin");
   };
 

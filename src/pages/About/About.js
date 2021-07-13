@@ -1,45 +1,48 @@
-import React, { useState } from "react";
-import { Carousel, Container, Form, ListGroup } from "react-bootstrap";
+import React from "react";
+import { Image, Container } from "react-bootstrap";
+import { createUseStyles } from "react-jss";
+import myImage from "../../Assets/images/hesam-rahmani.JPG";
 
 const About = () => {
-  const [index, setIndex] = useState(0);
+  const useStyle = createUseStyles({
+    mainContent: {
+      display: "flex",
+      flexDirection: "column",
+      alignContent: "center",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    myImage: { width: "50%" },
+    aboutTexts: {
+      margin: "4rem",
+      fontSize: "1.5rem",
+      // ,border:'1px solid #000'
+      borderRadius: "5px",
+      padding: "2rem 4rem",
+      boxShadow: "0 0 7px 10px rgba(0,0,0,0.05)",
+    },
+  });
 
-  const handleSelect = (selectedIndex, e) => {
-    setIndex(selectedIndex);
-  };
+  const styles = useStyle();
+
   return (
     <>
-      <Container style={{ marginTop: "4rem" }} className="text-center">
-        <Carousel
-          style={{ color: "black" }}
-          activeIndex={index}
-          onSelect={handleSelect}
-        >
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="https://content.gallup.com/origin/gallupinc/GallupSpaces/Production/Cms/POLL/yif4rl7rlua3n0kelzevow.jpg"
-              alt="We"
-            />
-            <Carousel.Caption>
-              <h3>Hello </h3>
-              <p>We Are No1 Team</p>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              style={{height:'620px'}}
-              src="https://1040abroad.com/wp-content/uploads/2014/10/pexels-photo-772665.jpeg"
-              alt="Second slide"
-            />
-
-            <Carousel.Caption>
-              <h3>This is Us</h3>
-              <p>See You Later 🤞👋</p>
-            </Carousel.Caption>
-          </Carousel.Item>
-        </Carousel>
+      <Container>
+        <content className={styles.mainContent}>
+          <h1>About Us</h1>
+          <div className={styles.aboutTexts}>
+            <p>
+              I am Hesam Rahmani ReactJs & NodeJs developer
+              <br />
+              And this is a portfolio for my CV
+            </p>
+          </div>
+          <Image
+            className={styles.myImage}
+            src={myImage}
+            alt="Hesam Rahamani"
+          />
+        </content>
       </Container>
     </>
   );

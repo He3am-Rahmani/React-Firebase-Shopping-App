@@ -17,7 +17,7 @@ export const ViewAndEditReports = ({
       </ListGroup.Item>
 
       {ticket.length ? (
-        ticket.map((item,index) => (
+        ticket.map((item, index) => (
           <ListGroup.Item key={index}>
             <Row>
               <Col style={{ textAlign: "right" }} md={12}>
@@ -52,7 +52,9 @@ export const ViewAndEditReports = ({
                   <strong>Message:</strong>
                 </i>
               </Col>
-              <Col md={5}>{item.message}</Col>
+              <Col md={5}>
+                <pre>{item.message}</pre>
+              </Col>
             </Row>
           </ListGroup.Item>
         ))

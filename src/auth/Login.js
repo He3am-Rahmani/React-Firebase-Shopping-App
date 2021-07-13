@@ -2,15 +2,30 @@ import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../features/userSlicer";
 
 export default function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const { login } = useAuth();
   const [error, setError] = useState("");
-  const [message,setMessage]= useState('')
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+  const { currentUser } = useAuth();
+  if (currentUser) {
+    console.log(" not null");
+    history.push("/dashboard");
+  } else {
+    console.log("null");
+  }
+
+  const dispatch = useDispatch();
+
+  // const displayName = useSelector((state) => state.displayName);
+  // const email = useSelector((state) => state.email);
+  // const photoURL = useSelector((state) => state.photoURL);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -18,12 +33,14 @@ export default function Login() {
     try {
       setError("");
       setLoading(true);
-      await login(emailRef.current.value, passwordRef.current.value);
-      setMessage('Logged In Redirect Operation ...')
-      setTimeout(()=>{
-        history.push("/");
 
-      },2300)
+      await login(emailRef.current.value, passwordRef.current.value);
+      // dispatch(login(emailRef.current.value, passwordRef.current.value));
+
+      // setMessage("Logged In Redirect Operation ...");
+      // setTimeout(() => {
+      history.push("");
+      // }, 2300);
     } catch {
       setError("Failed to log in");
     }

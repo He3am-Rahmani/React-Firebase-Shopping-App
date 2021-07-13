@@ -7,7 +7,7 @@ import store from "./store";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
-import "react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css";
+// import "react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css";
 
 ReactDOM.render(
   <Provider store={store}>

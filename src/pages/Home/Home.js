@@ -17,7 +17,7 @@ const Home = ({ history }) => {
   // const callDispatch = async () => {
   //   await
   // };
-  
+
   useEffect(() => {
     dispatch(productListAction());
     // callDispatch();
@@ -26,9 +26,18 @@ const Home = ({ history }) => {
   if (products.type === "failed" || products.length === 0) {
     View = (
       <>
-        <h1>Status Code 500 </h1> <p>Server Internal Error</p>
+        <h1>Failed to load products </h1> <p>Status Code:500 Server Internal Error</p>
       </>
     );
+
+    // if ((products.type === "failed", products.length === 0)) {
+    //   setInterval(() => {
+    //     dispatch(productListAction());
+    //     console.log('trying?')
+    //   }, 15000);
+    // }else{
+      
+    // }
   } else {
     let filterdProducts = products.filter((product) =>
       keyword === ""

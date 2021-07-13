@@ -11,7 +11,7 @@ import {
   Button,
 } from "react-bootstrap";
 import Pagination from "../../components/Pagination/Pagination";
-import ProductComp from "../../components/Products/Products";
+import ProductComp from "../../components/Products/Products.jsx";
 import { Link } from "react-router-dom";
 
 const ShowingProducts = ({
@@ -76,7 +76,7 @@ const ShowingProducts = ({
             <Spinner
               as="span"
               animation="grow"
-              size="sm"
+              size="md"
               role="status"
               aria-hidden="true"
             />{" "}
@@ -106,26 +106,28 @@ const ShowingProducts = ({
                 </Col>
               );
             })}
+            {products.length >= 6 ? (
+              // <Container>
+              <>
+                {keyword ? (
+                  <Pagination
+                    postsPerPage={postsPerPage}
+                    totalPosts={beforFilterPostNumber}
+                    paginate={paginate}
+                  />
+                ) : (
+                  <Pagination
+                    postsPerPage={postsPerPage}
+                    totalPosts={products.length}
+                    paginate={paginate}
+                  />
+                )}
+              </>
+            ) : (
+              // </Container>
+              <></>
+            )}
           </Row>
-          {products.length >= 6 ? (
-            <Container>
-              {keyword ? (
-                <Pagination
-                  postsPerPage={postsPerPage}
-                  totalPosts={beforFilterPostNumber}
-                  paginate={paginate}
-                />
-              ) : (
-                <Pagination
-                  postsPerPage={postsPerPage}
-                  totalPosts={products.length}
-                  paginate={paginate}
-                />
-              )}
-            </Container>
-          ) : (
-            <></>
-          )}
         </>
       )}
     </div>

@@ -31,7 +31,7 @@ const ContactUs = ({ history }) => {
       setError("We Need All Fields For This Operation");
     } else {
       axios
-        .post(`http://localhost:8000/api/ticket/new-ticket`, {
+        .post(`https://rocky-lake-08170.herokuapp.com/api/ticket/new-ticket`, {
           key: process.env.REACT_APP_API_KEY,
           name: nameRef.current.value,
           email: emailRef.current.value,

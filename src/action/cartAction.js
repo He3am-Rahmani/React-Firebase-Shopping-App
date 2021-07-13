@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const addToCart = (id) => async (dispatch, getState) => {
-  const  {data}  = await axios.get(`http://localhost:8000/api/products/${id}`);
+  const  {data}  = await axios.get(`https://rocky-lake-08170.herokuapp.com/api/products/${id}`);
 
   dispatch({
     type: "CART_ADD_ITEM",
@@ -26,7 +26,7 @@ export const removeFromCart = (id) => (dispatch, getState) => {
 };
 
 export const viewCart = () => async (dispatch, getState) => {
-  const { data } = await axios.get(`http://localhost:8000/api/products/`);
+  const { data } = await axios.get(`https://rocky-lake-08170.herokuapp.com/api/products/`);
 
   dispatch({
     type: "CART_VIEW_ITEM",
