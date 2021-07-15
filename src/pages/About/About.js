@@ -4,6 +4,7 @@ import { createUseStyles } from "react-jss";
 import myImage from "../../Assets/images/hesam-rahmani.JPG";
 
 const About = () => {
+  document.title = "About"
   const useStyle = createUseStyles({
     mainContent: {
       display: "flex",

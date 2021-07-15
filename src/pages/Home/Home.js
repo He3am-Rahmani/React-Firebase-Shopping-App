@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { Modal, Spinner, ModalBody } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { productListAction } from "../../action/ProductAction";
 import "./Home.css";
@@ -20,24 +20,41 @@ const Home = ({ history }) => {
 
   useEffect(() => {
     dispatch(productListAction());
+    document.title = 'Home'
     // callDispatch();
   }, [dispatch]);
 
   if (products.type === "failed" || products.length === 0) {
     View = (
       <>
-        <h1>Failed to load products </h1> <p>Status Code:500 Server Internal Error</p>
+        {loading ? (
+          <Modal
+            size="sm"
+            style={{
+              textAlign: "center",
+            }}
+            show={loading}
+            aria-labelledby="contained-modal-title-vcenter"
+          >
+            <ModalBody style={{ display: "flex" , flexDirection:'row',alignItems:'center',justifyContent:'center',gap:'1rem' }}>
+              <Spinner
+                as="span"
+                animation="grow"
+                size="md"
+                role="status"
+                aria-hidden="true"
+              />{" "}
+              Loading...
+            </ModalBody>
+          </Modal>
+        ) : (
+          <>
+            <h1>Failed to load Products </h1>{" "}
+            <p>Status Code:500 Server Internal Error</p>
+          </>
+        )}
       </>
     );
-
-    // if ((products.type === "failed", products.length === 0)) {
-    //   setInterval(() => {
-    //     dispatch(productListAction());
-    //     console.log('trying?')
-    //   }, 15000);
-    // }else{
-      
-    // }
   } else {
     let filterdProducts = products.filter((product) =>
       keyword === ""

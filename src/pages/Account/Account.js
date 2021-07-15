@@ -5,8 +5,7 @@ import Login from "../../auth/Login";
 import Dashboard from "../../auth/Dashboard";
 
 const Account = () => {
-  const { currentUser } = useAuth();
-
+  const { currentUser } = useAuth(); 
   return currentUser ? <Dashboard /> : <Login />;
 };
 

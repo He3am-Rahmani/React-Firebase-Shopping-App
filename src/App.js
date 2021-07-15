@@ -6,12 +6,9 @@ import {
   Redirect,
 } from "react-router-dom";
 
-import Footer from "./components/Footer/Footer";
-import Header from "./components/Header/Header";
 import Home from "./pages/Home/Home";
 import Product from "./pages/Product/ProductPage";
 
-import { Container } from "react-bootstrap";
 import nfPage from "./pages/404Page/nfPage";
 import Account from "./pages/Account/Account";
 import Cart from "./pages/Cart/Cart";

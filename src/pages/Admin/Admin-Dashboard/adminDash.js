@@ -72,7 +72,7 @@ export default function AdminDash({ history, match }) {
 
   useEffect(() => {
     dispatch(productListAction());
-
+    document.title = "Admin Dashboard";
     axios
       .post(`https://rocky-lake-08170.herokuapp.com/api/tocken/get-admin/`, {
         url: history.location.state,
@@ -216,7 +216,6 @@ export default function AdminDash({ history, match }) {
     description
       ? (description = updateDescRef.current.value)
       : (description = selectedProduct.description);
-    console.log(name, price, image, description);
 
     axios
       .put(`https://rocky-lake-08170.herokuapp.com/api/products/update`, {
@@ -260,9 +259,12 @@ export default function AdminDash({ history, match }) {
         .then((response) => {
           if (response.data.message.type === "success") {
             axios
-              .post(`https://rocky-lake-08170.herokuapp.com/api/admin/get-admins`, {
-                key: process.env.REACT_APP_API_KEY,
-              })
+              .post(
+                `https://rocky-lake-08170.herokuapp.com/api/admin/get-admins`,
+                {
+                  key: process.env.REACT_APP_API_KEY,
+                }
+              )
               .then((response) => {
                 setAdminList(response.data.data);
               });
@@ -289,12 +291,14 @@ export default function AdminDash({ history, match }) {
           controllerAdmin: adminInfo.userName,
         })
         .then((response) => {
-          console.log(response);
           if (response.data.message.type === "success") {
             axios
-              .post(`https://rocky-lake-08170.herokuapp.com/api/admin/get-admins/`, {
-                key: process.env.REACT_APP_API_KEY,
-              })
+              .post(
+                `https://rocky-lake-08170.herokuapp.com/api/admin/get-admins/`,
+                {
+                  key: process.env.REACT_APP_API_KEY,
+                }
+              )
               .then((response) => {
                 setAdminList(response.data.data);
               });
@@ -336,11 +340,14 @@ export default function AdminDash({ history, match }) {
           setError("Fill Out Fields");
         } else {
           axios
-            .post(`https://rocky-lake-08170.herokuapp.com/api/discount/create`, {
-              key: process.env.REACT_APP_API_KEY,
-              name: addDiscNameRef.current.value.trim(),
-              value: perRange,
-            })
+            .post(
+              `https://rocky-lake-08170.herokuapp.com/api/discount/create`,
+              {
+                key: process.env.REACT_APP_API_KEY,
+                name: addDiscNameRef.current.value.trim(),
+                value: perRange,
+              }
+            )
             .then((response) => {
               if (response.data.message.type === "success") {
                 setMessage(response.data.message.message);
@@ -375,7 +382,9 @@ export default function AdminDash({ history, match }) {
     document.querySelector("#nav-p").style.display = "block";
     document.querySelector("footer").style.display = "block";
     document.querySelector("#main-cont").classList = "container";
-    axios.put(`https://rocky-lake-08170.herokuapp.com/api/tocken/used/${match.params.tocken}`);
+    axios.put(
+      `https://rocky-lake-08170.herokuapp.com/api/tocken/used/${match.params.tocken}`
+    );
     history.push("/admin");
   };
 

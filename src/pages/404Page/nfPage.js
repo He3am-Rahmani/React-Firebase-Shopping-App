@@ -5,6 +5,8 @@ import image from "././images/404.jpg";
 import "./nfPage.css";
 
 const NfPage = () => {
+  document.title = 'Page Not Founf'
+
   return (
     <>
       <div className="cl-404">

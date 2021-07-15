@@ -12,6 +12,8 @@ export default function Signup() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+  document.title = 'Sign Up'
+
 
   async function handleSubmit(e) {
     e.preventDefault();

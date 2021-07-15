@@ -42,8 +42,9 @@ const Cart = ({ match, history }) => {
     let redTotalPrice = cartItems.reduce(
       (acc, item) => Number(acc) + Number(item.price),
       ""
-    );
-    setTotalPrice(redTotalPrice);
+      );
+      setTotalPrice(redTotalPrice);
+      document.title = 'Cart'
   }, [dispatch, match, productId, cartItems, history]);
  
   const removeFromCartHandler = (id) => {

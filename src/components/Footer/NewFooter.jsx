@@ -28,7 +28,7 @@ const NewFooter = () => {
       href: "https://www.linkedin.com/in/hesam-rahmani-5a2b871b7/",
     },
     { name: "github", href: "https://github.com/he3am-rahmani" },
-    { name: "twitter", href: "https://twitter.com/he3am-rahmani" },
+    { name: "twitter", href: "https://twitter.com/Re4l_no1" },
   ]);
   const useStyle = createUseStyles({
     footerParent: {

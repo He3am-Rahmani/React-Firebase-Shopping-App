@@ -13,6 +13,9 @@ export default function AdminLogin() {
   // eslint-disable-next-line no-unused-vars
   const { currentUser, logout } = useAuth();
 
+  document.title = 'Login Admin Panel'
+
+
   if (error !== "" || message !== "") {
     setTimeout(() => {
       setError("");

@@ -2,9 +2,7 @@ import React from "react";
 import {
   Row,
   Col,
-  Modal,
-  Spinner,
-  ModalBody,
+
   Form,
   InputGroup,
   Container,
@@ -63,27 +61,7 @@ const ShowingProducts = ({
           )}
         </InputGroup>
       </Form>
-      {loading ? (
-        <Modal
-          size="sm"
-          style={{
-            textAlign: "center",
-          }}
-          show={loading}
-          aria-labelledby="contained-modal-title-vcenter"
-        >
-          <ModalBody>
-            <Spinner
-              as="span"
-              animation="grow"
-              size="md"
-              role="status"
-              aria-hidden="true"
-            />{" "}
-            Loading...
-          </ModalBody>
-        </Modal>
-      ) : filterdProducts.length === 0 ? (
+      {filterdProducts.length === 0 && keyword ? (
         <h4>
           Not Found !{" "}
           <Link
@@ -106,29 +84,29 @@ const ShowingProducts = ({
                 </Col>
               );
             })}
-            {products.length >= 6 ? (
-              // <Container>
-              <>
-                {keyword ? (
-                  <Pagination
-                    postsPerPage={postsPerPage}
-                    totalPosts={beforFilterPostNumber}
-                    paginate={paginate}
-                  />
-                ) : (
-                  <Pagination
-                    postsPerPage={postsPerPage}
-                    totalPosts={products.length}
-                    paginate={paginate}
-                  />
-                )}
-              </>
-            ) : (
-              // </Container>
-              <></>
-            )}
           </Row>
+          {products.length >= 6 ? (
+            // <Container>
+            <>
+              {keyword ? (
+                <Pagination
+                  postsPerPage={postsPerPage}
+                  totalPosts={beforFilterPostNumber}
+                  paginate={paginate}
+                />
+              ) : (
+                <Pagination
+                  postsPerPage={postsPerPage}
+                  totalPosts={products.length}
+                  paginate={paginate}
+                />
+              )}
+            </>
+          ) : (
+            <></>
+          )}
         </>
+        // </Container>
       )}
     </div>
   );

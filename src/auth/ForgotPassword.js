@@ -9,6 +9,8 @@ export default function ForgotPassword() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  document.title = 'Forgot Password'
+
 
   async function handleSubmit(e) {
     e.preventDefault();

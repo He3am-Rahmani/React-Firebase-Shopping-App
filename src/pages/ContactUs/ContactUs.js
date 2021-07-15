@@ -14,6 +14,8 @@ const ContactUs = ({ history }) => {
   const subjectRef = useRef();
   const messageRef = useRef();
 
+  document.title = "Contact Us";
+
   if (error !== "" || message !== "") {
     setTimeout(() => {
       setError("");

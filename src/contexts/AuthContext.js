@@ -19,7 +19,7 @@ export function AuthProvider({ children }) {
     });
   }
 
-  const login = (email, password) =>
+  const login = async (email, password) =>
     auth.signInWithEmailAndPassword(email, password);
 
   const logout = () => auth.signOut();
@@ -36,6 +36,10 @@ export function AuthProvider({ children }) {
   const updateAvatarPic = (avUrl) =>
     currentUser.updateProfile({ photoURL: avUrl });
 
+  const user = (currentUser) => {
+    return currentUser;
+  };
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
@@ -46,6 +50,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const value = {
+    user,
     currentUser,
     login,
     signup,

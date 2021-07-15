@@ -5,6 +5,7 @@ import NfPage from "../404Page/nfPage";
 import { Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { productDetailAction } from "../../action/ProductAction";
+import { createUseStyles } from "react-jss";
 
 import "./ProductPage.css";
 
@@ -16,9 +17,21 @@ const ProductPage = ({ history, match }) => {
 
   const { loading, product } = productDetail;
 
+  const useStyles = createUseStyles({
+    backButton: {
+      '&:hover':{
+        textDecoration: 'none',
+        color:'#000'
+      }
+    }
+  });
+
+  const styles = useStyles();
+
   useEffect(() => {
     dispatch(productDetailAction(match.params.id));
-  }, [match, dispatch]);
+    document.title = product.name;
+  }, [match, dispatch, product.name]);
 
   const addHandler = () => {
     setMessage("Product Added To your Cart Successfully");
@@ -33,13 +46,17 @@ const ProductPage = ({ history, match }) => {
       ? (show = <h2>loading Product details</h2>)
       : (show = (
           <div>
-            <Link to="/">
-              <i className="back-btn fa fa-arrow-left"> Back To Home Page</i>
+            <Link className={styles.backButton} to="/">
+              <i className="back-btn fa fa-arrow-left"></i> Back To Home Page
             </Link>
 
             <Row>
               <Col md="5">
-                <Image style={{marginTop:'3rem'}} width="400px" src={product.image} />
+                <Image
+                  style={{ marginTop: "3rem" }}
+                  width="400px"
+                  src={product.image}
+                />
               </Col>
               <Col md="5">
                 <ListGroup className="description" variant="flush">

@@ -83,7 +83,6 @@ export const ViewProducts = ({
               <Col md={1}>
                 <i
                   onClick={() => {
-                    console.log(item)
                     setSelectedProduct(item);
                     setOperation("EDIT_PRODUCTS");
                   }}

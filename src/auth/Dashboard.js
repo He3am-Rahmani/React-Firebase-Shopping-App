@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Button, Alert, Image, Col, Container } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
@@ -9,17 +9,27 @@ export default function Dashboard() {
   const { currentUser, logout } = useAuth();
   const history = useHistory();
 
+  useEffect(() => {
+    document.title = "Dashboard";
+
+    document.querySelector(
+      "navitem .login-0-2-6"
+    ).innerHTML = `<img class="image-0-2-16" alt="Avatar" src="${currentUser.photoURL}">${currentUser.displayName}`;
+  });
+
   async function handleLogout() {
     setError("");
 
     try {
       await logout();
+      document.querySelector(
+        "navitem .login-0-2-6"
+      ).innerHTML = `<img class="image-0-2-16" alt="Avatar" src="/static/media/myPic.366a8681.png">Login/Sign-Up`;
       history.push("/login");
-    } catch(e) {
+    } catch (e) {
       setError("Failed to log out");
     }
   }
- 
 
   return (
     <div className="d-flex justify-content-center">
@@ -37,8 +47,9 @@ export default function Dashboard() {
                   alignItems: "center",
                 }}
               >
-                <Image className={!currentUser.photoURL ? 'filter' : ''}
-                alt='Avatar Photo'
+                <Image
+                  className={!currentUser.photoURL ? "filter" : ""}
+                  alt="Avatar Photo"
                   src={currentUser.photoURL || myPic}
                   style={{
                     width: "100px",

@@ -22,6 +22,7 @@ export default function UpdateProfile() {
 
   useEffect(() => {
     passwordRef.current.value = "";
+    document.title = "Update Profile";
   }, []);
 
   function handleSubmit(e) {
@@ -50,7 +51,7 @@ export default function UpdateProfile() {
 
     Promise.all(promises)
       .then(() => {
-        history.push("/");
+        history.push("/dashboard");
       })
       .catch(() => {
         setError("Failed to update account");
