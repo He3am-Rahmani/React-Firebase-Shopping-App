@@ -4,7 +4,7 @@ import { createUseStyles } from "react-jss";
 
 
 
-export const Button = ({ to, children, className, onClick, isAvatar }) => {
+export const Button = ({ to, children, className, onClick, isAvatar ,id}) => {
   const useStyles = createUseStyles({
     button: {
       display: "flex",
@@ -37,6 +37,7 @@ export const Button = ({ to, children, className, onClick, isAvatar }) => {
   return (
     <>
       <Link
+        id={id}
         onClick={onClick}
         className={`${styles.button} ${className}`}
         to={to}

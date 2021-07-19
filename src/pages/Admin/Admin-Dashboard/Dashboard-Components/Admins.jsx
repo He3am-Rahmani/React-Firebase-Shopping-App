@@ -11,8 +11,8 @@ export const AddAdmin = ({
   return (
     <Form variant="white">
       <h2>Add New Admin</h2>
-      {error && <Alert variant="danger">{error}</Alert>}
-      {message && <Alert variant="success">{message}</Alert>}
+      {/* {error && <Alert variant="danger">{error}</Alert>} */}
+      {/* {message && <Alert variant="success">{message}</Alert>} */}
       <Form.Group id="name">
         <Form.Label>Name</Form.Label>
         <Form.Control type="text" ref={refs.addAdminNameRef} required />
@@ -97,8 +97,8 @@ export const RemoveAdmin = ({ error, message, refs, removeAdminHandler }) => {
   return (
     <Form variant="white">
       <h2>Remove Admin</h2>
-      {error && <Alert variant="danger">{error}</Alert>}
-      {message && <Alert variant="success">{message}</Alert>}
+      {/* {error && <Alert variant="danger">{error}</Alert>}  */}
+      {/* {message && <Alert variant="success">{message}</Alert>} */}
       <Form.Group id="username">
         <Form.Label>Username</Form.Label>
         <Form.Control type="text" ref={refs.delAdminRef} required />

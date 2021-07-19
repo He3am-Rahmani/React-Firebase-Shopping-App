@@ -13,8 +13,8 @@ export const AddProduct = ({ error, message, refs, addProductHandler }) => {
   return (
     <Form variant="white">
       <h2>Add New Product</h2>
-      {error && <Alert variant="danger">{error}</Alert>}
-      {message && <Alert variant="success">{message}</Alert>}
+      {/* {error && <Alert variant="danger">{error}</Alert>} */}
+      {/* {message && <Alert variant="success">{message}</Alert>} */}
       <Form.Group id="name">
         <Form.Label>Name</Form.Label>
         <Form.Control type="text" ref={refs.addNameRef} required />
@@ -47,8 +47,8 @@ export const DeleteProduct = ({
   return (
     <Form variant="white">
       <h2>Delete Product</h2>
-      {error && <Alert variant="danger">{error}</Alert>}
-      {message && <Alert variant="success">{message}</Alert>}
+      {/* {error && <Alert variant="danger">{error}</Alert>} */}
+      {/* {message && <Alert variant="success">{message}</Alert>} */}
       <Form.Group id="name">
         <Form.Label>Name</Form.Label>
         <Form.Control type="text" ref={refs.delNameRef} required />

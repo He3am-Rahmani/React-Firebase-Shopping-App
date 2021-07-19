@@ -2,7 +2,13 @@
 // /* eslint-disable no-unused-vars */
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
-import { Button, Dropdown, DropdownButton, ButtonGroup } from "react-bootstrap";
+import {
+  Button,
+  Dropdown,
+  DropdownButton,
+  ButtonGroup,
+  Alert,
+} from "react-bootstrap";
 import "./adminDash.css";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -25,9 +31,10 @@ import {
   AddDiscount,
 } from "./Dashboard-Components/Discounts";
 import { ViewAndEditReports } from "./Dashboard-Components/Reports";
+import { ViewAndEditComments } from "./Dashboard-Components/Comments";
 
 export default function AdminDash({ history, match }) {
-  let vue = <h1>hello</h1>;
+  let vue = <h1>There Is Something Wrog</h1>;
   const addNameRef = useRef("");
   const priceRef = useRef("");
   const imageRef = useRef("");
@@ -55,6 +62,7 @@ export default function AdminDash({ history, match }) {
   const [error, setError] = useState("");
   const [ticket, setTicket] = useState([]);
   const [disList, setDisList] = useState([]);
+  const [comments, setComments] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState({});
 
   const dispatch = useDispatch();
@@ -110,6 +118,14 @@ export default function AdminDash({ history, match }) {
       })
       .then((response) => {
         setDisList(response.data.data);
+      });
+
+    axios
+      .post(`https://rocky-lake-08170.herokuapp.com/api/comments/`, {
+        key: process.env.REACT_APP_API_KEY,
+      })
+      .then(({ data }) => {
+        setComments(data);
       });
 
     if (document.querySelector("#nav-p")) {
@@ -378,6 +394,83 @@ export default function AdminDash({ history, match }) {
       .catch((err) => setError("Operation Failur Cause " + err));
   };
 
+  const setCommentVerified = (id, status) => {
+    axios
+      .put(`https://rocky-lake-08170.herokuapp.com/api/comment/update`, {
+        key: process.env.REACT_APP_API_KEY,
+        id: id,
+        isVerified: status ? false : true,
+      })
+      .then(({ data }) => {
+        if (data.message.type === "success") {
+          if (status) {
+            setError("Comment UnPublished Successfully");
+          } else {
+            setMessage("Comment Published Successfully");
+          }
+        } else {
+          setError("Operation Failed");
+        }
+      });
+  };
+
+  const removeCommentsHandler = (id, index) => {
+    axios
+      .post(`https://rocky-lake-08170.herokuapp.com/api/comment/remove`, {
+        key: process.env.REACT_APP_API_KEY,
+        id: id,
+      })
+      .then(({ data }) => {
+        if (data.message.type === "success") {
+          setMessage("Comment Deleted Successfully");
+          const newComments = comments;
+          newComments.splice(index, 1);
+          setComments(newComments);
+        } else {
+          setError("Operation Failure");
+        }
+      });
+  };
+
+  const setReplyVerified = (commentId, replyId, status) => {
+    axios
+      .put(`https://rocky-lake-08170.herokuapp.com/api/comment/update-reply`, {
+        key: process.env.REACT_APP_API_KEY,
+        commentId: commentId,
+        replyId: replyId,
+        isVerified: status ? false : true,
+      })
+      .then(({ data }) => {
+        if (status) {
+          setError("Reply UnPublished Successfully");
+        } else {
+          setMessage("Reply Published Successfully");
+        }
+      });
+  };
+  const removeReplysHandler = (
+    commentId,
+    replyId,
+    commentIndex,
+    replyIndex
+  ) => {
+    axios
+      .post(`https://rocky-lake-08170.herokuapp.com/api/comment/delete-reply`, {
+        key: process.env.REACT_APP_API_KEY,
+        commentId: commentId,
+        replyId: replyId,
+      })
+      .then(({ data }) => {
+        setMessage(data.message.message);
+        const newComments = comments;
+        newComments[commentIndex].replys.splice(replyIndex, 1);
+        setComments(newComments);
+      })
+      .catch((e) => setError(e.message));
+
+    console.log(comments[commentIndex].replys[replyIndex]);
+  };
+
   const exitAdminPanel = () => {
     document.querySelector("#nav-p").style.display = "block";
     document.querySelector("footer").style.display = "block";
@@ -576,6 +669,19 @@ export default function AdminDash({ history, match }) {
         />
       );
       break;
+    case "COMMENTS":
+      vue = (
+        <ViewAndEditComments
+          comments={comments}
+          setCommentVerified={setCommentVerified}
+          removeCommentsHandler={removeCommentsHandler}
+          message={message}
+          error={error}
+          setReplyVerified={setReplyVerified}
+          removeReplysHandler={removeReplysHandler}
+        />
+      );
+      break;
     case "VI_DEL_DISCOUNT":
       vue = (
         <ViewAndDeleteDiscounts
@@ -672,6 +778,15 @@ export default function AdminDash({ history, match }) {
 
             <Button
               onClick={() => {
+                setOperation("COMMENTS");
+              }}
+              style={{ color: "#fff" }}
+              className="btn btn-primary view-btn"
+            >
+              Comments
+            </Button>
+            <Button
+              onClick={() => {
                 setOperation("TICKET");
               }}
               style={{ color: "#fff" }}
@@ -738,6 +853,8 @@ export default function AdminDash({ history, match }) {
             </DropdownButton>
 
             {OnlySA}
+            {error && <Alert variant="danger">{error}</Alert>}
+            {message && <Alert variant="success">{message}</Alert>}
           </div>
           <div className="w-50">{vue}</div>
         </div>

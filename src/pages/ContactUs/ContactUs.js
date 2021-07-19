@@ -95,7 +95,7 @@ const ContactUs = ({ history }) => {
                 </Form.Group>
                 <Form.Group id="message">
                   <Form.Label>Message</Form.Label>
-                  <Form.Control ref={messageRef} required />
+                  <Form.Control as="textarea" ref={messageRef} required />
                 </Form.Group>
                 <Button onClick={setTokenHandler} className="w-100">
                   Submit{" "}

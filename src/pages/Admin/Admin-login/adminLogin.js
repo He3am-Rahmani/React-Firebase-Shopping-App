@@ -59,7 +59,7 @@ export default function AdminLogin() {
               setError("NoT Valid Data");
             }
           } else {
-            setError("Check Your Password Case");
+            setError("Not Correct");
           }
         })
         .catch((err) => {

@@ -10,8 +10,8 @@ export const ViewAndEditReports = ({
   return (
     <ListGroup variant="flush">
       <h2>Reports</h2>
-      {error && <Alert variant="danger">{error}</Alert>}
-      {message && <Alert variant="success">{message}</Alert>}
+      {/* {error && <Alert variant="danger">{error}</Alert>} */}
+      {/* {message && <Alert variant="success">{message}</Alert>} */}
       <ListGroup.Item>
         <Row></Row>
       </ListGroup.Item>

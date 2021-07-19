@@ -11,8 +11,8 @@ export const ViewAndDeleteDiscounts = ({
   return (
     <ListGroup variant="flush">
       <h2>Active Discounts</h2>
-      {error && <Alert variant="danger">{error}</Alert>}
-      {message && <Alert variant="success">{message}</Alert>}
+      {/* {error && <Alert variant="danger">{error}</Alert>} */}
+      {/* {message && <Alert variant="success">{message}</Alert>} */}
       <ListGroup.Item>
         <Row></Row>
       </ListGroup.Item>
@@ -68,8 +68,8 @@ export const AddDiscount = ({
   return (
     <Form variant="white">
       <h2>Add Discount</h2>
-      {error && <Alert variant="danger">{error}</Alert>}
-      {message && <Alert variant="success">{message}</Alert>}
+      {/* {error && <Alert variant="danger">{error}</Alert>} */}
+      {/* {message && <Alert variant="success">{message}</Alert>} */}
       <Form.Group id="name">
         <Form.Label>Name</Form.Label>
         <Form.Control type="text" ref={refs.addDiscNameRef} required />

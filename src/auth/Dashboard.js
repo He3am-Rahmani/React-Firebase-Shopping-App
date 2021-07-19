@@ -11,9 +11,8 @@ export default function Dashboard() {
 
   useEffect(() => {
     document.title = "Dashboard";
-
     document.querySelector(
-      "navitem .login-0-2-6"
+      "#login"
     ).innerHTML = `<img class="image-0-2-16" alt="Avatar" src="${currentUser.photoURL}">${currentUser.displayName}`;
   });
 
@@ -23,7 +22,7 @@ export default function Dashboard() {
     try {
       await logout();
       document.querySelector(
-        "navitem .login-0-2-6"
+        "#login"
       ).innerHTML = `<img class="image-0-2-16" alt="Avatar" src="/static/media/myPic.366a8681.png">Login/Sign-Up`;
       history.push("/login");
     } catch (e) {

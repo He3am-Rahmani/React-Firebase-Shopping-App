@@ -35,14 +35,14 @@ const About = () => {
             <p>
               I am Hesam Rahmani ReactJs & NodeJs developer
               <br />
-              And this is a portfolio for my CV
+              And this is a portfolio for my Resume
             </p>
           </div>
-          <Image
+          {/* <Image
             className={styles.myImage}
             src={myImage}
             alt="Hesam Rahamani"
-          />
+          /> */}
         </content>
       </Container>
     </>

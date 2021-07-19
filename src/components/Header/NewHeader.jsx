@@ -4,7 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { Button } from "./Header-Components/HeaderComponents";
 import { createUseStyles } from "react-jss";
 import { useHistory } from "react-router";
-import myPic from "../../Assets/images/myPic.png";
+import myPic from "../../Assets/images/user.png";
 import { Container } from "react-bootstrap";
 
 const NewHeader = ({ currentUser, setCurrentUser }) => {
@@ -122,6 +122,7 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
           <navItem className={styles.navItem}>
             {NavItems.items.map((item, index) => (
               <Button
+                id={item.isAvatar ? 'login' : null}
                 isAvatar={item.isAvatar}
                 onClick={() => {
                   setNavItems({ ...NavItems, currentActive: index });
