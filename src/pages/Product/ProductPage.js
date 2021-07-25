@@ -52,13 +52,14 @@ const ProductPage = ({ history, match }) => {
       gap: "10rem",
       justifyContent: "space-between",
       alignItems: "center",
+      width: "100%",
     },
     comments: {
       width: "100%",
       display: "flex",
       flexDirection: "column",
       gap: "1rem",
-      justifyContent: "center",
+      justifyContent: "space-between",
     },
     commentsLabel: {
       fontSize: "1.5rem",
@@ -70,6 +71,57 @@ const ProductPage = ({ history, match }) => {
       gap: "1rem",
     },
     commentInput: { border: "none", boxShadow: "0 0 2px 2px rgba(0,0,0,0.05)" },
+    split: {
+      width: "100%",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      flex: 1,
+      // display: "flex",
+      // flexDirection: "row",
+      // justifyItems: "space-between",
+      gap: "2rem",
+      alignItems: "center",
+      // alignContent:'center',
+      "@media(max-width:430px)": {
+        flexDirection: "column",
+      },
+    },
+    productsDescriptions: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: ".5rem",
+      width: "50%",
+      "@media(max-width:430px)": {
+        gap: "2rem",
+        justifyContent: "center",
+        width: "100%",
+      },
+    },
+    description: {
+      width: "75%",
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "baseline",
+      alignContent: "center",
+      "&:last-child": {
+        justifyContent: "center",
+        marginTop: "3rem",
+      },
+      "@media(max-width:430px)": {
+        gap: "4rem",
+        justifyContent: "space-between",
+      },
+    },
+    image: {
+      width: "75%",
+      height: "75%",
+      "@media(max-width:430px)": {
+        width: "100%",
+      },
+    },
   });
 
   const styles = useStyles();
@@ -146,7 +198,7 @@ const ProductPage = ({ history, match }) => {
           .then((response) => {
             setShowModal(true);
             setMessage(response.data.message.message);
-            replyRef.current.value = ''
+            replyRef.current.value = "";
           });
       } else {
         setError("Please Fill Out Reply Field To Reply");
@@ -175,6 +227,7 @@ const ProductPage = ({ history, match }) => {
             size="sm"
             style={{
               textAlign: "center",
+              width: "90%",
             }}
             show={loading}
             aria-labelledby="contained-modal-title-vcenter"
@@ -206,54 +259,52 @@ const ProductPage = ({ history, match }) => {
             </Link>
 
             <div className={styles.content}>
-              <Row>
-                <Col md="5">
+              <div className={styles.split}>
+                <div className={styles.imageHolders}>
                   <Image
+                    className={styles.image}
                     style={{ marginTop: "3rem" }}
-                    width="400px"
                     src={product.image}
                   />
-                </Col>
-                <Col md="5">
-                  <ListGroup className="description" variant="flush">
-                    {message && <Alert variant="success">{message}</Alert>}
-                    <ListGroup.Item>
-                      <h3>
-                        <strong>
-                          <i>Name: </i>
-                        </strong>
-                        {product.name}
-                      </h3>
-                    </ListGroup.Item>
+                </div>
+                {/* <Col md="7" sm="12"> */}
+                <div className={styles.productsDescriptions}>
+                  {message && <Alert variant="success">{message}</Alert>}
+                  <div className={styles.description}>
+                    <h5>
+                      <strong>Name:</strong>
+                    </h5>
+                    {product.name}
+                  </div>
 
-                    <ListGroup.Item>
-                      <h4>
-                        <strong>
-                          <i>Price:</i>
-                        </strong>{" "}
-                        {product.price} Mil
-                      </h4>
-                    </ListGroup.Item>
+                  <div className={styles.description}>
+                    <h5>
+                      <strong>Price:</strong>{" "}
+                    </h5>
+                    {product.price} Mil
+                  </div>
 
-                    <ListGroup.Item>
-                      <h6>
-                        <strong>
-                          <i>Description: </i>
-                        </strong>
-                        {product.description}
-                      </h6>
-                    </ListGroup.Item>
-                  </ListGroup>
-                  <ListGroup className="description" variant="flush">
-                    <ListGroup.Item>
-                      <Button className="btn btn-warning" onClick={addHandler}>
-                        Add To Cart
-                      </Button>
-                    </ListGroup.Item>
-                  </ListGroup>
-                </Col>
-              </Row>
-              <Modal show={showModal} onHide={handleClose}>
+                  <div className={styles.description}>
+                    <h5>
+                      <strong>Description:</strong>
+                    </h5>
+                    {product.description}
+                  </div>
+                  {/* <div className={styles.description} variant="flush"> */}
+                  <div className={styles.description}>
+                    <Button className="btn btn-secondary" onClick={addHandler}>
+                      Add To Cart
+                    </Button>
+                  </div>
+                  {/* </div> */}
+                </div>
+                {/* </Col> */}
+              </div>
+              <Modal
+                show={showModal}
+                onHide={handleClose}
+                style={{ width: "90%" }}
+              >
                 <Modal.Header closeButton>
                   <Modal.Title>Comment Submitted</Modal.Title>
                 </Modal.Header>

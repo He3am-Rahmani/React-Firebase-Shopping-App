@@ -11,9 +11,15 @@ export default function Dashboard() {
 
   useEffect(() => {
     document.title = "Dashboard";
-    document.querySelector(
-      "#login"
-    ).innerHTML = `<img class="image-0-2-16" alt="Avatar" src="${currentUser.photoURL}">${currentUser.displayName}`;
+    if (
+      document.querySelector("#login").innerHTML !==
+      `<img class="image-0-2-16" alt="Avatar" src="${currentUser.photoURL}">${currentUser.displayName}`
+    ) {
+      document.querySelector(
+        "#login"
+      ).innerHTML = `<img class="image-0-2-16" alt="Avatar" src="${currentUser.photoURL}">${currentUser.displayName}`;
+    }
+    console.log(document.querySelector(`#login`).innerHTML);
   });
 
   async function handleLogout() {

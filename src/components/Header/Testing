@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { Button } from "./Header-Components/HeaderComponents";
@@ -6,8 +6,6 @@ import { createUseStyles } from "react-jss";
 import { useHistory } from "react-router";
 import myPic from "../../Assets/images/user.png";
 import { Container } from "react-bootstrap";
-import { BiMenu } from "react-icons/bi";
-import { AiOutlineClose } from "react-icons/ai";
 
 const NewHeader = ({ currentUser, setCurrentUser }) => {
   // const { currentUser }= useAuth();
@@ -17,7 +15,7 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
   // console.log(currentUser);
   // console.log(user);
 
-  const [showSideMenu, setSideMenu] = useState(false);
+  const width = window.screen.width;
 
   const history = useHistory();
 
@@ -48,27 +46,26 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
   const [NavItems, setNavItems] = useState({
     currentActive: current(),
     items: [
-      { name: "Home", to: "/" },
+      { name: "Home", to: "/", show: width <= 375 ? true : false },
       {
         name: "About Us",
         to: "/about",
+        show: width <= 375 ? false : true,
       },
       {
         name: "Contact Us",
         to: "/contact",
+        show: width <= 375 ? false : true,
       },
-      { name: "Cart", to: "/cart" },
+      { name: "Cart", to: "/cart", show: width <= 375 ? true : false },
       {
         name: currentUser ? currentUser.displayName : "Login/Sign-Up",
         to: currentUser ? "/dashboard" : "/login",
         isAvatar: currentUser ? currentUser.photoURL || myPic : myPic,
+        show: true,
       },
     ],
   });
-
-  useEffect(() => {
-    setSideMenu(false)
-  }, [document.location.href]);
 
   const useStyle = createUseStyles({
     navbar: {
@@ -81,6 +78,9 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
       borderBottom: "0.5px solid #f3f3f3",
       boxShadow: "0 0 5px 5px rgba(0,0,0,0.05)",
       marginBottom: "2rem",
+      "@media(max-width:430px)": {
+       
+      },
     },
     active: {
       color: "#000",
@@ -92,25 +92,6 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "flex-end",
-      "@media(max-width:430px)": {
-        justifyContent: "flex-start",
-        flexDirection: "column",
-        position: "fixed",
-        top: "0",
-        right: "-100%",
-        transition: "all 1.5s",
-        height: "100%",
-      },
-    },
-    navItemActiv: {
-      justifyContent: "flex-start",
-      right: 0,
-      backgroundColor: "#c1c1c1c1",
-      height: "100%",
-      width: "80%",
-      zIndex: "100",
-      transition: "all 1s",
-      boxShadow: "0 0  100px rgba(0, 0, 0, 0.05)",
     },
     container: {
       display: "flex",
@@ -126,7 +107,7 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
         textDecoration: "none",
       },
       "@media(max-width:430px)": {
-        fontSize: "1.7rem",
+        fontSize: "1.5rem",
       },
     },
     login: {
@@ -138,15 +119,15 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
       position: "relative",
       left: "1rem",
       "@media(max-width:430px)": {
-        border: "none",
+        border:'none'
       },
     },
-    freeSpace: {
-      display: "none",
+    freeSpace:{
+      display:'none',
       "@media(max-width:430px)": {
-        display: "inline",
+        display:'inline'
       },
-    },
+    }
   });
 
   const styles = useStyle();
@@ -159,37 +140,30 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
           <Link className={styles.logo} to="/">
             N01 SH0P
           </Link>
-          <navItem
-            className={`${styles.navItem} 
-             ${showSideMenu ? styles.navItemActiv : null} 
-          `}
-          >
-            {NavItems.items.map((item, index) => (
-              <Button
-                id={item.isAvatar ? "login" : null}
-                isAvatar={item.isAvatar}
-                onClick={() => {
-                  setNavItems({ ...NavItems, currentActive: index });
-                }}
-                key={index}
-                to={item.to}
-                className={`${
-                  index === NavItems.currentActive ? styles.active : null
-                } ${item.isAvatar ? styles.login : null}  `}
-              >
-                {item.name}
-              </Button>
-            ))}
+          <navItem className={styles.navItem}>
+            {NavItems.items.map((item, index) =>
+              item.show ? (
+                <Button
+                  id={item.isAvatar ? "login" : null}
+                  isAvatar={item.isAvatar}
+                  onClick={() => {
+                    setNavItems({ ...NavItems, currentActive: index });
+                  }}
+                  key={index}
+                  to={item.to}
+                  className={`${
+                    index === NavItems.currentActive ? styles.active : null
+                  } ${item.isAvatar ? styles.login : null}  `}
+                >
+                  {width <= 375
+                    ? item.isAvatar
+                      ? null
+                      : item.name
+                    : item.name}
+                </Button>
+              ) : null
+            )}
           </navItem>
-          <div
-            className={styles.freeSpace}
-            style={{ zIndex: "400" }}
-            onClick={() => {
-              setSideMenu(!showSideMenu);
-            }}
-          >
-            {!showSideMenu ? <BiMenu /> : <AiOutlineClose />}
-          </div>
         </Container>
       </navbar>
     </header>

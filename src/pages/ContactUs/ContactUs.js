@@ -66,9 +66,16 @@ const ContactUs = ({ history }) => {
                 {message && <Alert variant="success">{message}</Alert>}
                 <Row
                   className=" d-flex flex-row"
-                  style={{ gap: "5rem", justifyContent: "center" }}
+                  style={{ justifyContent: "space-between" , margin:'.1rem'}}
                 >
-                  <Form.Group style={{ width: "45%" }} id="name">
+                  <Form.Group
+                    style={{
+                      width: "45%",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                    id="name"
+                  >
                     <Form.Label>Name</Form.Label>
                     <Form.Control
                       type="Name"

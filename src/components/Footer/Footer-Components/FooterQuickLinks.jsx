@@ -9,7 +9,7 @@ const FooterQuickLinks = ({ links }) => {
       display: "flex",
       flexDirection: "row",
       justifyContent: "center",
-      gap: "1.5rem",
+      gap: "1rem",
       alignItems: "center",
     },
     links: {

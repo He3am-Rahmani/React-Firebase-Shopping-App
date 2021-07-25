@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Row,
-  Col,
-
-  Form,
-  InputGroup,
-  Container,
-  Button,
-} from "react-bootstrap";
+import { Row, Col, Form, InputGroup, Container, Button } from "react-bootstrap";
 import Pagination from "../../components/Pagination/Pagination";
 import ProductComp from "../../components/Products/Products.jsx";
 import { Link } from "react-router-dom";
@@ -76,7 +68,7 @@ const ShowingProducts = ({
         </h4>
       ) : (
         <>
-          <Row>
+          <Row style={{ margin: "0" }}>
             {filterdProducts.map((item) => {
               return (
                 <Col key={item.id} sm="12" md="6" lg="4">

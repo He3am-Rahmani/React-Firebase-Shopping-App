@@ -28,10 +28,11 @@ const Home = ({ history }) => {
     View = (
       <>
         {loading ? (
-          <Modal
+          <Modal 
             size="sm"
             style={{
               textAlign: "center",
+              width:'90%'
             }}
             show={loading}
             aria-labelledby="contained-modal-title-vcenter"

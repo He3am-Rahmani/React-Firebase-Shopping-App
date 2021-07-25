@@ -34,7 +34,8 @@ export default function Layout({ children }) {
         return "Update Profile";
       case "/admin/dashboard/":
         return "Admin Dashboard";
-        case '/admin/login':return "Admin Login";
+      case "/admin/login":
+        return "Admin Login";
       default:
         return "No1 Shop";
     }
