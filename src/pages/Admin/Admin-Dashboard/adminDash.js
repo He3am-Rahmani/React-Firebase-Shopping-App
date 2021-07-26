@@ -714,9 +714,9 @@ export default function AdminDash({ history, match }) {
       <div style={{ margin: "2rem 0rem" }}>
         <div
           style={{
+            margin: "0 1rem",
             gap: "2rem",
-            justifyContent: "space-around",
-            alignItems: "flex-start",
+            justifyContent: "space-evenly",
           }}
           className="view d-flex"
         >
@@ -856,7 +856,7 @@ export default function AdminDash({ history, match }) {
             {error && <Alert variant="danger">{error}</Alert>}
             {message && <Alert variant="success">{message}</Alert>}
           </div>
-          <div className="w-50">{vue}</div>
+          <div className="w-75">{vue}</div>
         </div>
       </div>
     </>

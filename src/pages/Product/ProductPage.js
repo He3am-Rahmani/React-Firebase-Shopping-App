@@ -227,7 +227,7 @@ const ProductPage = ({ history, match }) => {
             size="sm"
             style={{
               textAlign: "center",
-              width: "90%",
+              width: "100%",
             }}
             show={loading}
             aria-labelledby="contained-modal-title-vcenter"
@@ -303,7 +303,7 @@ const ProductPage = ({ history, match }) => {
               <Modal
                 show={showModal}
                 onHide={handleClose}
-                style={{ width: "90%" }}
+                style={{ width: "100%", textAlign: "center" }}
               >
                 <Modal.Header closeButton>
                   <Modal.Title>Comment Submitted</Modal.Title>

@@ -68,7 +68,7 @@ const ShowingProducts = ({
         </h4>
       ) : (
         <>
-          <Row style={{ margin: "0" }}>
+          <Row style={{ margin: "0"}}>
             {filterdProducts.map((item) => {
               return (
                 <Col key={item.id} sm="12" md="6" lg="4">

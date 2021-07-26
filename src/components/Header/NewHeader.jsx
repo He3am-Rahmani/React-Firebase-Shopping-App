@@ -67,7 +67,7 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
   });
 
   useEffect(() => {
-    setSideMenu(false)
+    setSideMenu(false);
   }, [document.location.href]);
 
   const useStyle = createUseStyles({
@@ -100,6 +100,7 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
         right: "-100%",
         transition: "all 1.5s",
         height: "100%",
+        zIndex: "100",
       },
     },
     navItemActiv: {

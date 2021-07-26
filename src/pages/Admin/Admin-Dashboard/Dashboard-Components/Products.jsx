@@ -125,8 +125,8 @@ export const EditProducts = ({
   return(
     <Form variant="white">
     <h2>Edit Product</h2>
-    {error && <Alert variant="danger">{error}</Alert>}
-    {message && <Alert variant="success">{message}</Alert>}
+    {/* {error && <Alert variant="danger">{error}</Alert>}
+    {message && <Alert variant="success">{message}</Alert>} */}
     <Form.Group id="name">
       <Form.Label>Name</Form.Label>
       <Form.Control

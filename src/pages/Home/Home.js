@@ -20,7 +20,7 @@ const Home = ({ history }) => {
 
   useEffect(() => {
     dispatch(productListAction());
-    document.title = 'Home'
+    document.title = "Home";
     // callDispatch();
   }, [dispatch]);
 
@@ -28,16 +28,25 @@ const Home = ({ history }) => {
     View = (
       <>
         {loading ? (
-          <Modal 
+          <Modal
             size="sm"
             style={{
               textAlign: "center",
-              width:'90%'
+              width: "100%",
+               margin:'1rem auto'
             }}
             show={loading}
             aria-labelledby="contained-modal-title-vcenter"
           >
-            <ModalBody style={{ display: "flex" , flexDirection:'row',alignItems:'center',justifyContent:'center',gap:'1rem' }}>
+            <ModalBody
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "1rem",
+              }}
+            >
               <Spinner
                 as="span"
                 animation="grow"

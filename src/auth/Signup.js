@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
-
+import { createUseStyles } from "react-jss";
 export default function Signup() {
   const userRef = useRef()
   const emailRef = useRef();
@@ -13,7 +13,19 @@ export default function Signup() {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   document.title = 'Sign Up'
+const useStyles = createUseStyles({
+    content: {
+      width: "100%",
+      justifyContent: "center",
+ 
+    },
 
+    card: {
+      margin: "1rem auto",
+      width: "50%",
+      "@media(max-width:430px)": { width: "100%" },
+    },
+  });
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -36,11 +48,11 @@ export default function Signup() {
 
     setLoading(false);
   }
-
+const styles = useStyles();
   return (
-    <div className="d-flex justify-content-center">
-      <div className="w-50 d-flex flex-column justify-content-center mt-5">
-        <Card>
+   // <div className="d-flex justify-content-center">
+      <div  className={styles.content}>
+        <Card className={styles.card}>
           <Card.Body>
             <h2 className="text-center mb-4">Sign Up</h2>
             {error && <Alert variant="danger">{error}</Alert>}
@@ -75,6 +87,6 @@ export default function Signup() {
           Already have an account? <Link to="/login">Log In</Link>
         </div>
       </div>
-    </div>
+   // </div>
   );
 }

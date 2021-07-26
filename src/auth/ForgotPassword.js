@@ -2,16 +2,27 @@ import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
-
+import { createUseStyles } from "react-jss";
 export default function ForgotPassword() {
   const emailRef = useRef();
   const { resetPassword } = useAuth();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  document.title = 'Forgot Password'
+  document.title = "Forgot Password";
+  const useStyles = createUseStyles({
+    content: {
+      width: "100%",
+      justifyContent: "center",
+     
+    },
 
-
+    card: {
+      margin: "1rem auto",
+      width: "50%",
+      "@media(max-width:430px)": { width: "100%" },
+    },
+  });
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -21,39 +32,39 @@ export default function ForgotPassword() {
       setLoading(true);
       await resetPassword(emailRef.current.value);
       setMessage("Check your inbox for further instructions");
-    } catch (e){
+    } catch (e) {
       setError("Failed to reset password");
     }
 
     setLoading(false);
   }
-
+  const styles = useStyles();
   return (
-    <div className="d-flex justify-content-center">
-      <div className="w-50 d-flex flex-column justify-content-center mt-5">
-        <Card>
-          <Card.Body>
-            <h2 className="text-center mb-4">Password Reset</h2>
-            {error && <Alert variant="danger">{error}</Alert>}
-            {message && <Alert variant="success">{message}</Alert>}
-            <Form onSubmit={handleSubmit}>
-              <Form.Group id="email">
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="email" ref={emailRef} required />
-              </Form.Group>
-              <Button disabled={loading} className="w-100" type="submit">
-                Reset Password
-              </Button>
-            </Form>
-            <div className="w-100 text-center mt-3">
-              <Link to="/login">Login</Link>
-            </div>
-          </Card.Body>
-        </Card>
-        <div className="w-100 text-center mt-2">
-          Need an account? <Link to="/signup">Sign Up</Link>
-        </div>
+    //  <div className="d-flex justify-content-center">
+    <div className={styles.content}>
+      <Card className={styles.card}>
+        <Card.Body>
+          <h2 className="text-center mb-4">Password Reset</h2>
+          {error && <Alert variant="danger">{error}</Alert>}
+          {message && <Alert variant="success">{message}</Alert>}
+          <Form onSubmit={handleSubmit}>
+            <Form.Group id="email">
+              <Form.Label>Email</Form.Label>
+              <Form.Control type="email" ref={emailRef} required />
+            </Form.Group>
+            <Button disabled={loading} className="w-100" type="submit">
+              Reset Password
+            </Button>
+          </Form>
+          <div className="w-100 text-center mt-3">
+            <Link to="/login">Login</Link>
+          </div>
+        </Card.Body>
+      </Card>
+      <div className="w-100 text-center mt-2">
+        Need an account? <Link to="/signup">Sign Up</Link>
       </div>
     </div>
+    //</div>
   );
 }

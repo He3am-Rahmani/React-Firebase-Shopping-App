@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import userIcon from "../../Assets/images/user.png";
 
 const Comments = ({ comment, children, refs, addReplyHandler, refChange }) => {
-  const [wantReply, setWantReply] = useState(true);
+  const [wantReply, setWantReply] = useState(false);
 
   const useStyles = createUseStyles({
     comment: {

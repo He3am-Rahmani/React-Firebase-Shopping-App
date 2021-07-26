@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthContext";
+import { createUseStyles } from "react-jss";
 
 export default function AdminLogin() {
   const [error, setError] = useState("");
@@ -13,8 +14,19 @@ export default function AdminLogin() {
   // eslint-disable-next-line no-unused-vars
   const { currentUser, logout } = useAuth();
 
-  document.title = 'Login Admin Panel'
+  document.title = "Login Admin Panel";
+  const useStyles = createUseStyles({
+    content: {
+      width: "100%",
+      justifyContent: "center",
+    },
 
+    card: {
+      margin: "1rem auto",
+      width: "50%",
+      "@media(max-width:430px)": { width: "100%" },
+    },
+  });
 
   if (error !== "" || message !== "") {
     setTimeout(() => {
@@ -70,10 +82,12 @@ export default function AdminLogin() {
     }
   };
 
+  const styles = useStyles();
+
   return (
-    <div className="d-flex justify-content-center">
-      <div className="w-50 d-flex flex-column justify-content-center mt-5 test-s">
-        <Card>
+   // <div className="d-flex justify-content-center">
+      <div className={styles.content}>
+        <Card className={styles.card}>
           <Card.Body>
             <h2 className="text-center mb-4">Log In To Admin Panel</h2>
             {error && <Alert variant="danger">{error}</Alert>}
@@ -97,6 +111,6 @@ export default function AdminLogin() {
           If You Lost ? <Link to="/">Come Home With Me</Link>
         </div>
       </div>
-    </div>
+   // </div>
   );
 }
