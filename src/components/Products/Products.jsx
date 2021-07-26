@@ -10,12 +10,10 @@ function Products({ product }) {
 
   const useStyles = createUseStyles({
     image: {
-      width: "220px",
       height: "230px",
       maxHeight: "230px",
       textAlign: "center",
-      maxWidth: "220px",
-      padding: "2rem !important",
+      padding: "1.5rem !important",
       display: "inline-block",
     },
     card: {
