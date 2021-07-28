@@ -20,6 +20,11 @@ export const Button = ({ to, children, className, onClick, isAvatar ,id}) => {
         backgroundColor: "#f3f3f3",
         color:'#000',
       },
+      "@media(max-width:430px)": {
+        width:'100%'
+       , '&:hover': {
+        }
+      },
     },
     image: {
       width: "25px",

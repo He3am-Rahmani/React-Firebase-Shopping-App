@@ -110,7 +110,7 @@ const Cart = ({ match, history }) => {
             {" "}
             {totalPrice} Mil
           </span>{" "}
-          -&gt; <span style={{ color: "#12c942" }}>{afterDisPrice} Mil</span>
+          -&gt; <span style={{ color: "#12c942" }}>{Math.round(afterDisPrice)} Mil</span>
         </>
       );
     } else {

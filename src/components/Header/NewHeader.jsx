@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { Button } from "./Header-Components/HeaderComponents";
@@ -10,16 +10,10 @@ import { BiMenu } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 
 const NewHeader = ({ currentUser, setCurrentUser }) => {
-  // const { currentUser }= useAuth();
-
-  // const [ currentUser, setCurrentUser]  = useState(useAuth().currentUser);
-
-  // console.log(currentUser);
-  // console.log(user);
-
   const [showSideMenu, setSideMenu] = useState(false);
 
   const history = useHistory();
+  const [scrolled, setScrolled] = useState(false);
 
   const current = () => {
     switch (history.location.pathname) {
@@ -66,11 +60,32 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
     ],
   });
 
+  // const isScrolled = () => {
+  // };
   useEffect(() => {
     setSideMenu(false);
+    window.addEventListener("scroll", () =>
+      setScrolled(window.pageYOffset > 42 ? true : false)
+    );
   }, [document.location.href]);
 
   const useStyle = createUseStyles({
+    scrolledNavbar: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      width: "100%",
+      justifyContent: "space-between",
+      gap: "0.5rem",
+      borderBottom: "0.5px solid #f3f3f3",
+      boxShadow: "0 0 5px 5px rgba(0,0,0,0.05)",
+      marginBottom: "2rem",
+      zIndex: 500,
+      backgroundColor: "rgba(255,255,255,0.9)",
+      position: "fixed",
+      top: 0,
+      left: 0,
+    },
     navbar: {
       display: "flex",
       flexDirection: "row",
@@ -81,11 +96,19 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
       borderBottom: "0.5px solid #f3f3f3",
       boxShadow: "0 0 5px 5px rgba(0,0,0,0.05)",
       marginBottom: "2rem",
+      position: "sticky",
+      zIndex: 500,
+      backgroundColor: "rgba(255,255,255,0.9)",
     },
     active: {
       color: "#000",
       borderBottom: "2px solid #000",
       paddingBottom: "5px",
+      "@media(max-width:430px)": {
+        border: "none",
+        backgroundColor: "rgba(0,0,0,0.02)",
+        width: "100%",
+      },
     },
     navItem: {
       display: "flex",
@@ -98,7 +121,7 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
         position: "fixed",
         top: "0",
         right: "-100%",
-        transition: "all 1.5s",
+        transition: "all 1.5s ease-in-out",
         height: "100%",
         zIndex: "100",
       },
@@ -106,7 +129,7 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
     navItemActiv: {
       justifyContent: "flex-start",
       right: 0,
-      backgroundColor: "#c1c1c1c1",
+      backgroundColor: "rgba(255,255,255,0.95)",
       height: "100%",
       width: "80%",
       zIndex: "100",
@@ -128,6 +151,20 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
       },
       "@media(max-width:430px)": {
         fontSize: "1.7rem",
+      },
+    },
+    scrolledLogo: {
+      fontWeight: "500",
+      fontSize: "2.5rem",
+      fontFamily: "logo",
+
+      "&:hover": {
+        textDecoration: "none",
+      },
+      "@media(max-width:430px)": {
+        fontSize: "1.7rem",
+        transition: "all 2s",
+        transform: "matrix(1.00,0.00,0.00,1.00,-100,0)",
       },
     },
     login: {
@@ -154,10 +191,18 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
 
   return (
     <header id="nav-p">
-      <navbar className={styles.navbar}>
+      <navbar
+        onClick={() => {
+          console.log(window.scrollY);
+          console.log(scrolled);
+        }}
+        className={scrolled ? styles.scrolledNavbar : styles.navbar}
+      >
         <Container className={styles.container}>
+          {/* {scrolled ? null : */}
           <div className={styles.freeSpace}></div>
-          <Link className={styles.logo} to="/">
+          {/* //  } */}
+          <Link className={scrolled ? styles.scrolledLogo : styles.logo} to="/">
             N01 SH0P
           </Link>
           <navItem
@@ -182,6 +227,7 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
               </Button>
             ))}
           </navItem>
+
           <div
             className={styles.freeSpace}
             style={{ zIndex: "400" }}
