@@ -61,9 +61,12 @@
   -ms-animation: change-color 5s ease-in-out 0s infinite normal;
   animation: change-color 5s ease-in-out 0s infinite normal;
 }
+.text-primary-500 {
+  color: #007bffd0;
+}
 
 @-webkit-keyframes change-color {
-    0% {
+  0% {
     color: #f9edfa;
   }
   25% {
@@ -81,7 +84,7 @@
 }
 
 @keyframes change-color {
-   0% {
+  0% {
     color: #f9edfa;
   }
   25% {
@@ -96,4 +99,25 @@
   100% {
     color: rgb(236, 200, 255);
   }
+}
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -800px -800px;
+  }
+  100% {
+    background-position: 800px 800px;
+  }
+}
+
+.loading-background {
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background-color: #f6f7f8;
+  background: linear-gradient(to right, #eeeeee 8%, #bbbbbb 18%, #eeeeee 33%);
+  background-size: 800px 104px;
+  position: relative;
 }

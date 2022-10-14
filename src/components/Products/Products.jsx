@@ -3,7 +3,7 @@ import { Card, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { createUseStyles } from "react-jss";
 
-function Products({ product }) {
+function Products({ product, loading }) {
   const scroll = () => {
     window.scrollTo(0, 0);
   };
@@ -12,18 +12,26 @@ function Products({ product }) {
     image: {
       height: "230px",
       maxHeight: "230px",
+      maxWidth: "280px",
       textAlign: "center",
       padding: "1.5rem !important",
       display: "inline-block",
+    },
+    imageHolder: {
+      width: "100%",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: "1rem 1rem 0 1rem",
     },
     card: {
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
-      padding: "1rem",
       gap: ".5rem",
-      margin: "1rem 1rem",
+      margin: "1rem auto",
       maxWidth: "300px",
       maxHeight: "500px",
     },
@@ -33,8 +41,9 @@ function Products({ product }) {
       alignItems: "flex-start",
       justifyContent: "flex-start",
       width: "100%",
+      paddingLeft: "1rem",
     },
-    productPrice: {
+    productName: {
       fontSize: "1.6rem",
       "&:hover": {
         color: "#e8103d",
@@ -46,10 +55,44 @@ function Products({ product }) {
 
   const styles = useStyles();
 
-  return (
+  return loading ? (
+    <>
+      <Card
+        style={{ height: "330px", justifyContent: "flex-start" }}
+        className={styles.card}
+      >
+        <div
+          style={{ height: "220px" }}
+          className={`${styles.imageHolder} loading-background`}
+        ></div>
+        <div className={styles.cardDescription}>
+          <>
+            <div
+              style={{
+                width: "200px",
+                height: "25px",
+                margin: ".5rem 0 .5rem 0 ",
+                borderRadius: "2px",
+              }}
+              className="loading-background"
+            ></div>
+          </>
+          <div
+            style={{
+              width: "150px",
+              height: "25px",
+              marginBottom: ".5rem",
+              borderRadius: "2px",
+            }}
+            className="loading-background"
+          ></div>
+        </div>
+      </Card>
+    </>
+  ) : (
     <div>
       <Card className={styles.card} onClick={scroll}>
-        <Link to={`/products/${product._id}`}>
+        <Link className={styles.imageHolder} to={`/products/${product._id}`}>
           <Image
             className={styles.image}
             alt={product.name + "Image"}
@@ -58,7 +101,7 @@ function Products({ product }) {
           />
         </Link>
         <div className={styles.cardDescription}>
-          <Link to={`/products/${product._id}`} className={styles.productPrice}>
+          <Link to={`/products/${product._id}`} className={styles.productName}>
             <span>{product.name}</span>
           </Link>
           <h4>

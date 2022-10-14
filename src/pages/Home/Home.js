@@ -20,81 +20,54 @@ const Home = ({ history }) => {
 
   useEffect(() => {
     dispatch(productListAction());
+
     document.title = "Home";
     // callDispatch();
   }, [dispatch]);
 
-  if (products.type === "failed" || products.length === 0) {
-    View = (
-      <>
-        {loading ? (
-          <Modal
-            size="sm"
-            style={{
-              textAlign: "center",
-              width: "100%",
-               margin:'1rem auto'
-            }}
-            show={loading}
-            aria-labelledby="contained-modal-title-vcenter"
-          >
-            <ModalBody
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "1rem",
-              }}
-            >
-              <Spinner
-                as="span"
-                animation="grow"
-                size="md"
-                role="status"
-                aria-hidden="true"
-              />{" "}
-              Loading...
-            </ModalBody>
-          </Modal>
-        ) : (
-          <>
-            <h1>Failed to load Products </h1>{" "}
-            <p>Status Code:500 Server Internal Error</p>
-          </>
-        )}
-      </>
-    );
+  let filterdProducts = [];
+
+  if (products.type === "failed" && products.length !== 0) {
+    filterdProducts = [];
   } else {
-    let filterdProducts = products.filter((product) =>
+    filterdProducts = products.filter((product) =>
       keyword === ""
         ? product
         : product.name.toLowerCase().includes(keyword.toLocaleLowerCase())
     );
+  }
 
-    const paginate = (pageNumber) => {
-      setCurrentPage(pageNumber);
+  console.log(filterdProducts);
 
-      window.scrollTo({ behavior: "smooth", top: 0 });
-    };
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
 
-    const beforFilterPostNumber = filterdProducts.length;
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    filterdProducts = filterdProducts.slice(indexOfFirstPost, indexOfLastPost);
+    window.scrollTo({ behavior: "smooth", top: 0 });
+  };
 
+  const beforFilterPostNumber = filterdProducts.length;
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  filterdProducts = filterdProducts.slice(indexOfFirstPost, indexOfLastPost);
+  View = (
+    <ShowingProducts
+      products={products}
+      keyword={keyword}
+      setKeyword={setKeyword}
+      setCurrentPage={setCurrentPage}
+      loading={loading}
+      filterdProducts={filterdProducts}
+      paginate={paginate}
+      beforFilterPostNumber={beforFilterPostNumber}
+      postsPerPage={postsPerPage}
+    />
+  );
+
+  if (products.type === "failed" && products.length !== 0) {
     View = (
-      <ShowingProducts
-        products={products}
-        keyword={keyword}
-        setKeyword={setKeyword}
-        setCurrentPage={setCurrentPage}
-        loading={loading}
-        filterdProducts={filterdProducts}
-        paginate={paginate}
-        beforFilterPostNumber={beforFilterPostNumber}
-        postsPerPage={postsPerPage}
-      />
+      <>
+        <h1>Failed to load Products </h1>
+      </>
     );
   }
 

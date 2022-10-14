@@ -95,25 +95,15 @@ const Comments = ({ comment, children, refs, addReplyHandler, refChange }) => {
             <i>{comment.creationDate}</i>
           </div>
         </div>
-        {wantReply ? (
-          <Link
-            onClick={() => {
-              setWantReply(false);
-            }}
-            className={styles.cancelReply}
-          >
-            Cancel
-          </Link>
-        ) : (
-          <Link
-            onClick={() => {
-              setWantReply(true);
-            }}
-            className={styles.reply}
-          >
-            Relpy
-          </Link>
-        )}
+
+        <Link
+          onClick={() => {
+            setWantReply(!wantReply);
+          }}
+          className={wantReply ? styles.cancelReply : styles.reply}
+        >
+          {wantReply ? <>Cancel</> : <>Relpy</>}
+        </Link>
       </div>
       <div className={styles.commentBody}>
         <p>{comment.body}</p>

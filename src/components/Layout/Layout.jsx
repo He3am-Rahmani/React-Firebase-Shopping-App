@@ -4,12 +4,12 @@ import { Container } from "react-bootstrap";
 // import Footer from "../Footer/Footer";
 import NewHeader from "../Header/NewHeader";
 import NewFooter from "../Footer/NewFooter";
-import { useAuth } from "../../contexts/AuthContext";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 
 export default function Layout({ children }) {
-  const [currentUser, setCurrentUser] = useState(useAuth().currentUser);
+  const [isAdminPanel, setIsAdminPanel] = useState(false);
 
+  const location = useLocation();
   const history = useHistory();
 
   const title = () => {
@@ -43,15 +43,20 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     document.title = title();
-  });
+    history.location.pathname.includes("/admin/dashboard")
+      ? setIsAdminPanel(true)
+      : setIsAdminPanel(false);
 
-  return (
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
+
+  return isAdminPanel ? (
+    <div>{children}</div>
+  ) : (
     <>
-      {/* <Header /> */}
-      <NewHeader currentUser={currentUser} setCurrentUser={setCurrentUser} />
+      <NewHeader />
       <Container id="main-cont">{children}</Container>
       <NewFooter />
-      {/* <Footer /> */}
     </>
   );
 }

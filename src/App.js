@@ -38,7 +38,6 @@ const App = () => {
           {/* <Container id="main-cont"> */}
           <Layout>
             <Switch>
-              <PrivateRoute path="/update-profile" component={UpdateProfile} />
               <Route path="/" component={Home} exact />
               <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />

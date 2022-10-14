@@ -1,19 +1,17 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext";
 import { Button } from "./Header-Components/HeaderComponents";
 import { createUseStyles } from "react-jss";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import myPic from "../../Assets/images/user.png";
 import { Container } from "react-bootstrap";
-import { BiMenu } from "react-icons/bi";
-import { AiOutlineClose } from "react-icons/ai";
-
-const NewHeader = ({ currentUser, setCurrentUser }) => {
+import { FiMenu } from "react-icons/fi";
+import { MdClose } from "react-icons/md";
+import { useSelector } from "react-redux";
+const NewHeader = ({ setCurrentUser }) => {
   const [showSideMenu, setSideMenu] = useState(false);
-
+  const { currentUser } = useSelector((state) => state.currentUser);
   const history = useHistory();
-  const [scrolled, setScrolled] = useState(false);
 
   const current = () => {
     switch (history.location.pathname) {
@@ -44,7 +42,7 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
     items: [
       { name: "Home", to: "/" },
       {
-        name: "About Us",
+        name: "About Me",
         to: "/about",
       },
       {
@@ -53,38 +51,33 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
       },
       { name: "Cart", to: "/cart" },
       {
-        name: currentUser ? currentUser.displayName : "Login/Sign-Up",
-        to: currentUser ? "/dashboard" : "/login",
-        isAvatar: currentUser ? currentUser.photoURL || myPic : myPic,
+        name: currentUser._id ? currentUser.displayName : "Login/Sign-Up",
+        to: currentUser._id ? "/dashboard" : "/login",
+        isAvatar: currentUser._id ? currentUser.photoURL || "withoutAvatar" : "withoutAvatar",
       },
     ],
   });
 
-  // const isScrolled = () => {
-  // };
   useEffect(() => {
-    setSideMenu(false);
-    window.addEventListener("scroll", () =>
-      setScrolled(window.pageYOffset > 42 ? true : false)
-    );
-  }, [document.location.href]);
+    const navbarStateClone = NavItems.items;
+
+    const newAvatarState = {
+      name: currentUser._id ? currentUser.displayName : "Login/Sign-Up",
+      to: currentUser._id ? "/dashboard" : "/login",
+      isAvatar: currentUser._id ? currentUser.photoURL || "withoutAvatar" : "withoutAvatar",
+    };
+    navbarStateClone.splice(4, 1, newAvatarState);
+    setNavItems({ ...NavItems, items: navbarStateClone });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser._id, currentUser.photoURL, currentUser.displayName]);
 
   const useStyle = createUseStyles({
-    scrolledNavbar: {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-      width: "100%",
-      justifyContent: "space-between",
-      gap: "0.5rem",
-      borderBottom: "0.5px solid #f3f3f3",
-      boxShadow: "0 0 5px 5px rgba(0,0,0,0.05)",
-      marginBottom: "2rem",
-      zIndex: 500,
-      backgroundColor: "rgba(255,255,255,0.9)",
-      position: "fixed",
-      top: 0,
-      left: 0,
+    navbarParent: {
+      marginBottom: "8rem",
+      "@media(max-width:570px)": {
+        marginBottom: "6.5rem",
+      },
     },
     navbar: {
       display: "flex",
@@ -93,18 +86,21 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
       width: "100%",
       justifyContent: "space-between",
       gap: "0.5rem",
-      borderBottom: "0.5px solid #f3f3f3",
+      borderBottom: "0.5px ",
       boxShadow: "0 0 5px 5px rgba(0,0,0,0.05)",
       marginBottom: "2rem",
-      position: "sticky",
       zIndex: 500,
-      backgroundColor: "rgba(255,255,255,0.9)",
+      backgroundColor: "rgba(255,255,255,0.05)",
+      backdropFilter: "blur(5px)",
+      position: "fixed",
+      top: 0,
+      left: 0,
     },
     active: {
       color: "#000",
       borderBottom: "2px solid #000",
       paddingBottom: "5px",
-      "@media(max-width:430px)": {
+      "@media(max-width:570px)": {
         border: "none",
         backgroundColor: "rgba(0,0,0,0.02)",
         width: "100%",
@@ -115,26 +111,33 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "flex-end",
-      "@media(max-width:430px)": {
+      "@media(max-width:570px)": {
         justifyContent: "flex-start",
         flexDirection: "column",
         position: "fixed",
         top: "0",
         right: "-100%",
         transition: "all 1.5s ease-in-out",
-        height: "100%",
+        height: "100vh",
         zIndex: "100",
       },
     },
+    mobileNavbarContainer: {
+      display: "flex",
+      flexDirection: "row",
+      width: "100%",
+    },
     navItemActiv: {
       justifyContent: "flex-start",
-      right: 0,
-      backgroundColor: "rgba(255,255,255,0.95)",
-      height: "100%",
-      width: "80%",
+      right: "0",
+      backgroundColor: "rgba(255,255,255,1)",
+      height: "100vh",
+      width: "100%",
       zIndex: "100",
       transition: "all 1s",
       boxShadow: "0 0  100px rgba(0, 0, 0, 0.05)",
+      padding: "3.5rem 0 0 0 ",
+      fontSize: "1.5rem",
     },
     container: {
       display: "flex",
@@ -149,22 +152,11 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
       "&:hover": {
         textDecoration: "none",
       },
-      "@media(max-width:430px)": {
+      "@media(max-width:730px)": {
         fontSize: "1.7rem",
       },
-    },
-    scrolledLogo: {
-      fontWeight: "500",
-      fontSize: "2.5rem",
-      fontFamily: "logo",
-
-      "&:hover": {
-        textDecoration: "none",
-      },
-      "@media(max-width:430px)": {
-        fontSize: "1.7rem",
-        transition: "all 2s",
-        transform: "matrix(1.00,0.00,0.00,1.00,-100,0)",
+      "@media(max-width:570px)": {
+        fontSize: "2.7rem",
       },
     },
     login: {
@@ -175,13 +167,14 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
       borderLeft: "solid 1px #cccccc",
       position: "relative",
       left: "1rem",
-      "@media(max-width:430px)": {
+      "@media(max-width:570px)": {
         border: "none",
+        padding: "14px 2rem 14px 0 !important",
       },
     },
     freeSpace: {
       display: "none",
-      "@media(max-width:430px)": {
+      "@media(max-width:570px)": {
         display: "inline",
       },
     },
@@ -190,19 +183,10 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
   const styles = useStyle();
 
   return (
-    <header id="nav-p">
-      <navbar
-        onClick={() => {
-          console.log(window.scrollY);
-          console.log(scrolled);
-        }}
-        className={scrolled ? styles.scrolledNavbar : styles.navbar}
-      >
-        <Container className={styles.container}>
-          {/* {scrolled ? null : */}
-          <div className={styles.freeSpace}></div>
-          {/* //  } */}
-          <Link className={scrolled ? styles.scrolledLogo : styles.logo} to="/">
+    <header className={styles.navbarParent}>
+      <navbar className={styles.navbar}>
+        <Container fluid="lg" className={styles.container}>
+          <Link className={styles.logo} to="/">
             N01 SH0P
           </Link>
           <navItem
@@ -216,6 +200,7 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
                 isAvatar={item.isAvatar}
                 onClick={() => {
                   setNavItems({ ...NavItems, currentActive: index });
+                  setSideMenu(false);
                 }}
                 key={index}
                 to={item.to}
@@ -227,20 +212,40 @@ const NewHeader = ({ currentUser, setCurrentUser }) => {
               </Button>
             ))}
           </navItem>
-
           <div
             className={styles.freeSpace}
-            style={{ zIndex: "400" }}
+            style={{
+              zIndex: "400",
+              color: "#007bff",
+            }}
             onClick={() => {
               setSideMenu(!showSideMenu);
             }}
           >
-            {!showSideMenu ? <BiMenu /> : <AiOutlineClose />}
+            {!showSideMenu ? (
+              <FiMenu style={{ fontSize: "1.5rem" }} />
+            ) : (
+              <MdClose style={{ fontSize: "1.7rem" }} />
+            )}
           </div>
         </Container>
       </navbar>
     </header>
   );
 };
+
+/*
+   <div
+            className={styles.freeSpace}
+            style={{
+              zIndex: "400",
+            }}
+            onClick={() => {
+              setSideMenu(!showSideMenu);
+            }}
+          >
+            {!showSideMenu ? <FiMenu style={{fontSize:'1.5rem'}}/> : <MdClose style={{fontSize:'1.7rem'}}/>}
+          </div>
+          */
 
 export default NewHeader;

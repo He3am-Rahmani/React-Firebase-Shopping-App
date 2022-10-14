@@ -2,8 +2,9 @@ import axios from "axios";
 import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { Link, Redirect, useHistory } from "react-router-dom";
-import { useAuth } from "../../../contexts/AuthContext";
 import { createUseStyles } from "react-jss";
+import { useDispatch } from "react-redux";
+import { userLogoutAction } from "../../../action/userAction";
 
 export default function AdminLogin() {
   const [error, setError] = useState("");
@@ -11,8 +12,8 @@ export default function AdminLogin() {
   const userRef = useRef("");
   const passwordRef = useRef("");
   let history = useHistory();
+  const dispatch = useDispatch();
   // eslint-disable-next-line no-unused-vars
-  const { currentUser, logout } = useAuth();
 
   document.title = "Login Admin Panel";
   const useStyles = createUseStyles({
@@ -24,7 +25,7 @@ export default function AdminLogin() {
     card: {
       margin: "1rem auto",
       width: "50%",
-      "@media(max-width:430px)": { width: "100%" },
+      "@media(max-width:570px)": { width: "100%" },
     },
   });
 
@@ -34,6 +35,18 @@ export default function AdminLogin() {
       setMessage("");
     }, 5000);
   }
+
+  const logout = () => {
+    setError("");
+
+    try {
+      dispatch(userLogoutAction());
+      history.push("/login");
+    } catch (e) {
+      setError("Failed to log out");
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let data = {
@@ -43,7 +56,7 @@ export default function AdminLogin() {
 
     try {
       axios
-        .post("https://rocky-lake-08170.herokuapp.com/api/admin/login", data)
+        .post("http://localhost:8000/api/admin/login", data)
         .then((response) => {
           const adminId = response.data.data.id;
           if (adminId) {
@@ -53,7 +66,7 @@ export default function AdminLogin() {
                 `Welcome ${response.data.data.role} ${response.data.data.userName} Redirect Operation In 3 Second`
               );
               axios
-                .post("https://rocky-lake-08170.herokuapp.com/api/tocken/new", {
+                .post("http://localhost:8000/api/tocken/new", {
                   apiKey: process.env.REACT_APP_API_KEY,
                   key: Date.now().toString(),
                   admin: adminId,
@@ -85,32 +98,32 @@ export default function AdminLogin() {
   const styles = useStyles();
 
   return (
-   // <div className="d-flex justify-content-center">
-      <div className={styles.content}>
-        <Card className={styles.card}>
-          <Card.Body>
-            <h2 className="text-center mb-4">Log In To Admin Panel</h2>
-            {error && <Alert variant="danger">{error}</Alert>}
-            {message && <Alert variant="success">{message}</Alert>}
-            <Form>
-              <Form.Group id="userName">
-                <Form.Label>Username</Form.Label>
-                <Form.Control type="text" ref={userRef} required />
-              </Form.Group>
-              <Form.Group id="password">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" ref={passwordRef} required />
-              </Form.Group>
-              <Button className="w-100" onClick={handleSubmit}>
-                Log In
-              </Button>
-            </Form>
-          </Card.Body>
-        </Card>
-        <div className="w-100 text-center mt-2">
-          If You Lost ? <Link to="/">Come Home With Me</Link>
-        </div>
+    // <div className="d-flex justify-content-center">
+    <div className={styles.content}>
+      <Card className={styles.card}>
+        <Card.Body>
+          <h2 className="text-center mb-4">Log In To Admin Panel</h2>
+          {error && <Alert variant="danger">{error}</Alert>}
+          {message && <Alert variant="success">{message}</Alert>}
+          <Form>
+            <Form.Group id="userName">
+              <Form.Label>Username</Form.Label>
+              <Form.Control type="text" ref={userRef} required />
+            </Form.Group>
+            <Form.Group id="password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" ref={passwordRef} required />
+            </Form.Group>
+            <Button className="w-100" onClick={handleSubmit}>
+              Log In
+            </Button>
+          </Form>
+        </Card.Body>
+      </Card>
+      <div className="w-100 text-center mt-2">
+        If You Lost ? <Link to="/">You Can Come Home With Me</Link>
       </div>
-   // </div>
+    </div>
+    // </div>
   );
 }

@@ -1,19 +1,24 @@
 import axios from "axios";
 
-export const addToCart = (id) => async (dispatch, getState) => {
-  const  {data}  = await axios.get(`https://rocky-lake-08170.herokuapp.com/api/products/${id}`);
+export const addToCart = (userId, product) => async (dispatch, getState) => {
+  const data = await axios.post(
+    "http://localhost:8000/api/add-product-to-cart",
+    {
+      key: "WHO_THE_HELL_IS_NO1",
+      userId: userId,
+      product: product,
+    }
+  );
+  if (data.data.message.type === "success") {
+    dispatch({
+      type: "CART_ADD_SUCCESS",
+      payload: product,
+    });
+  }
 
-  dispatch({
-    type: "CART_ADD_ITEM",
-    paylod: {
-      product: data._id,
-      name: data.name,
-      image: data.image,
-      price: data.price,
-    },
-  });
+  return data;
 
-  localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
+  // localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
 };
 
 export const removeFromCart = (id) => (dispatch, getState) => {
@@ -26,7 +31,9 @@ export const removeFromCart = (id) => (dispatch, getState) => {
 };
 
 export const viewCart = () => async (dispatch, getState) => {
-  const { data } = await axios.get(`https://rocky-lake-08170.herokuapp.com/api/products/`);
+  const { data } = await axios.get(
+    `http://localhost:8000/api/products/`
+  );
 
   dispatch({
     type: "CART_VIEW_ITEM",
@@ -40,4 +47,3 @@ export const viewCart = () => async (dispatch, getState) => {
 
   localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
 };
-

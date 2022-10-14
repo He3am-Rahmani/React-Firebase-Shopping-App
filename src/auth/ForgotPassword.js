@@ -20,7 +20,7 @@ export default function ForgotPassword() {
     card: {
       margin: "1rem auto",
       width: "50%",
-      "@media(max-width:430px)": { width: "100%" },
+      "@media(max-width:570px)": { width: "100%" },
     },
   });
   async function handleSubmit(e) {

@@ -24,7 +24,7 @@ const FooterAboutUs = () => {
 
   return (
     <div className={styles.aboutLayout}>
-      <Link to="/" className={styles.logo}>
+      <Link to="/about" className={styles.logo}>
         WE Are N01 Team
       </Link>
       <p>You Won't Be Alone Till We Are Alive</p>

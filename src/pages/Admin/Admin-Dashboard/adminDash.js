@@ -82,7 +82,7 @@ export default function AdminDash({ history, match }) {
     dispatch(productListAction());
     document.title = "Admin Dashboard";
     axios
-      .post(`https://rocky-lake-08170.herokuapp.com/api/tocken/get-admin/`, {
+      .post(`http://localhost:8000/api/tocken/get-admin/`, {
         url: history.location.state,
       })
       .then((response) => {
@@ -94,7 +94,7 @@ export default function AdminDash({ history, match }) {
       });
 
     axios
-      .post(`https://rocky-lake-08170.herokuapp.com/api/admin/get-admins`, {
+      .post(`http://localhost:8000/api/admin/get-admins`, {
         key: process.env.REACT_APP_API_KEY,
       })
       .then((response) => {
@@ -102,7 +102,7 @@ export default function AdminDash({ history, match }) {
       });
 
     axios
-      .post(`https://rocky-lake-08170.herokuapp.com/api/ticket/get-all`, {
+      .post(`http://localhost:8000/api/ticket/get-all`, {
         key: process.env.REACT_APP_API_KEY,
       })
       .then((response) => {
@@ -113,7 +113,7 @@ export default function AdminDash({ history, match }) {
       });
 
     axios
-      .post(`https://rocky-lake-08170.herokuapp.com/api/discount/get-all`, {
+      .post(`http://localhost:8000/api/discount/get-all`, {
         key: process.env.REACT_APP_API_KEY,
       })
       .then((response) => {
@@ -121,22 +121,12 @@ export default function AdminDash({ history, match }) {
       });
 
     axios
-      .post(`https://rocky-lake-08170.herokuapp.com/api/comments/`, {
+      .post(`http://localhost:8000/api/comments/`, {
         key: process.env.REACT_APP_API_KEY,
       })
       .then(({ data }) => {
         setComments(data);
       });
-
-    if (document.querySelector("#nav-p")) {
-      document.querySelector("#nav-p").style.display = "none";
-    }
-
-    if (document.querySelector("footer")) {
-      document.querySelector("footer").style.display = "none";
-    }
-
-    document.querySelector("#main-cont").classList = "";
   }, [dispatch, history, match]);
 
   // Functions
@@ -152,7 +142,7 @@ export default function AdminDash({ history, match }) {
       setError("Please Fill Out All Filds For This Operation");
     } else {
       axios
-        .post(`https://rocky-lake-08170.herokuapp.com/api/products/create`, {
+        .post(`http://localhost:8000/api/products/create`, {
           key: process.env.REACT_APP_API_KEY,
           name: addNameRef.current.value.trim(),
           image: imageRef.current.value.trim(),
@@ -173,7 +163,7 @@ export default function AdminDash({ history, match }) {
   const removeProductHandler = (productName, removedItemComponent, index) => {
     // removing without refresh TEST HERE
     axios
-      .post(`https://rocky-lake-08170.herokuapp.com/api/products/remove`, {
+      .post(`http://localhost:8000/api/products/remove`, {
         key: process.env.REACT_APP_API_KEY,
         name: productName,
       })
@@ -186,7 +176,7 @@ export default function AdminDash({ history, match }) {
           removedItemComponent.className = "removed-item";
           const position = window.pageYOffset + 100;
 
-          // using 1.async await because we need to wait for result then change the view data
+          // 1.using async await because we need to wait for result then change the view data
           // 2.need something to check products changing event
 
           const waiting = async () => {
@@ -234,7 +224,7 @@ export default function AdminDash({ history, match }) {
       : (description = selectedProduct.description);
 
     axios
-      .put(`https://rocky-lake-08170.herokuapp.com/api/products/update`, {
+      .put(`http://localhost:8000/api/products/update`, {
         key: process.env.REACT_APP_API_KEY,
         prodId: id,
         name: name,
@@ -245,8 +235,6 @@ export default function AdminDash({ history, match }) {
       .then((response) => {
         if (response.data.message.type === "success") {
           setMessage(response.data.message.message);
-          dispatch(productListAction());
-          dispatch(productDetailAction());
         } else {
           setError(response.data.message.message);
         }
@@ -263,7 +251,7 @@ export default function AdminDash({ history, match }) {
       setError("Please Fill Out All Filds For This Operation");
     } else {
       axios
-        .post(`https://rocky-lake-08170.herokuapp.com/api/admin/create`, {
+        .post(`http://localhost:8000/api/admin/create`, {
           key: process.env.REACT_APP_API_KEY,
           name: addAdminNameRef.current.value.trim(),
           role: adminRoleRef.current.value.trim(),
@@ -275,12 +263,9 @@ export default function AdminDash({ history, match }) {
         .then((response) => {
           if (response.data.message.type === "success") {
             axios
-              .post(
-                `https://rocky-lake-08170.herokuapp.com/api/admin/get-admins`,
-                {
-                  key: process.env.REACT_APP_API_KEY,
-                }
-              )
+              .post(`http://localhost:8000/api/admin/get-admins`, {
+                key: process.env.REACT_APP_API_KEY,
+              })
               .then((response) => {
                 setAdminList(response.data.data);
               });
@@ -301,7 +286,7 @@ export default function AdminDash({ history, match }) {
       );
     } else {
       axios
-        .post(`https://rocky-lake-08170.herokuapp.com/api/admin/remove/`, {
+        .post(`http://localhost:8000/api/admin/remove/`, {
           key: process.env.REACT_APP_API_KEY,
           userName: delAdminRef.current.value,
           controllerAdmin: adminInfo.userName,
@@ -309,12 +294,9 @@ export default function AdminDash({ history, match }) {
         .then((response) => {
           if (response.data.message.type === "success") {
             axios
-              .post(
-                `https://rocky-lake-08170.herokuapp.com/api/admin/get-admins/`,
-                {
-                  key: process.env.REACT_APP_API_KEY,
-                }
-              )
+              .post(`http://localhost:8000/api/admin/get-admins/`, {
+                key: process.env.REACT_APP_API_KEY,
+              })
               .then((response) => {
                 setAdminList(response.data.data);
               });
@@ -329,7 +311,7 @@ export default function AdminDash({ history, match }) {
 
   const delTicketHandler = (id) => {
     axios
-      .post(`https://rocky-lake-08170.herokuapp.com/api/ticket/del`, {
+      .post(`http://localhost:8000/api/ticket/del`, {
         key: process.env.REACT_APP_API_KEY,
         id: id,
       })
@@ -356,14 +338,11 @@ export default function AdminDash({ history, match }) {
           setError("Fill Out Fields");
         } else {
           axios
-            .post(
-              `https://rocky-lake-08170.herokuapp.com/api/discount/create`,
-              {
-                key: process.env.REACT_APP_API_KEY,
-                name: addDiscNameRef.current.value.trim(),
-                value: perRange,
-              }
-            )
+            .post(`http://localhost:8000/api/discount/create`, {
+              key: process.env.REACT_APP_API_KEY,
+              name: addDiscNameRef.current.value.trim(),
+              value: perRange,
+            })
             .then((response) => {
               if (response.data.message.type === "success") {
                 setMessage(response.data.message.message);
@@ -379,7 +358,7 @@ export default function AdminDash({ history, match }) {
 
   const delDisHandler = (id) => {
     axios
-      .post(`https://rocky-lake-08170.herokuapp.com/api/discount/remove`, {
+      .post(`http://localhost:8000/api/discount/remove`, {
         key: process.env.REACT_APP_API_KEY,
         id: id,
       })
@@ -394,14 +373,17 @@ export default function AdminDash({ history, match }) {
       .catch((err) => setError("Operation Failur Cause " + err));
   };
 
-  const setCommentVerified = (id, status) => {
+  const setCommentVerified = ({ id, authorId }, status) => {
     axios
-      .put(`https://rocky-lake-08170.herokuapp.com/api/comment/update`, {
+      .put(`http://localhost:8000/api/comment/update`, {
         key: process.env.REACT_APP_API_KEY,
         id: id,
+        authorId: authorId,
         isVerified: status ? false : true,
       })
       .then(({ data }) => {
+        console.log(data);
+
         if (data.message.type === "success") {
           if (status) {
             setError("Comment UnPublished Successfully");
@@ -415,10 +397,11 @@ export default function AdminDash({ history, match }) {
   };
 
   const removeCommentsHandler = (id, index) => {
+    console.log(id);
     axios
-      .post(`https://rocky-lake-08170.herokuapp.com/api/comment/remove`, {
+      .post(`http://localhost:8000/api/comment/remove`, {
         key: process.env.REACT_APP_API_KEY,
-        id: id,
+        id: id.id,
       })
       .then(({ data }) => {
         if (data.message.type === "success") {
@@ -432,15 +415,22 @@ export default function AdminDash({ history, match }) {
       });
   };
 
-  const setReplyVerified = (commentId, replyId, status) => {
+  const setReplyVerified = (
+    { commentId, replyId, commentAuthorId, authorId },
+    status
+  ) => {
+    console.log(status);
     axios
-      .put(`https://rocky-lake-08170.herokuapp.com/api/comment/update-reply`, {
+      .put(`http://localhost:8000/api/comment/update-reply`, {
         key: process.env.REACT_APP_API_KEY,
         commentId: commentId,
         replyId: replyId,
-        isVerified: status ? false : true,
+        isVerified: !status,
+        commentAuthorId: commentAuthorId,
+        authorId: authorId,
       })
       .then(({ data }) => {
+        console.log(data);
         if (status) {
           setError("Reply UnPublished Successfully");
         } else {
@@ -451,33 +441,34 @@ export default function AdminDash({ history, match }) {
   const removeReplysHandler = (
     commentId,
     replyId,
+    commentAuthorId,
+    authorId,
     commentIndex,
     replyIndex
   ) => {
     axios
-      .post(`https://rocky-lake-08170.herokuapp.com/api/comment/delete-reply`, {
+      .post(`http://localhost:8000/api/comment/delete-reply`, {
         key: process.env.REACT_APP_API_KEY,
         commentId: commentId,
         replyId: replyId,
+        commentAuthorId: commentAuthorId,
+        authorId: authorId,
       })
       .then(({ data }) => {
-        setMessage(data.message.message);
-        const newComments = comments;
-        newComments[commentIndex].replys.splice(replyIndex, 1);
-        setComments(newComments);
+        if (data.message.type === "success") {
+          setMessage(data.message.message);
+          const newComments = comments;
+          newComments[commentIndex].replys.splice(replyIndex, 1);
+          setComments(newComments);
+        } else {
+          setError(data.messages.message);
+        }
       })
       .catch((e) => setError(e.message));
-
-    console.log(comments[commentIndex].replys[replyIndex]);
   };
 
   const exitAdminPanel = () => {
-    document.querySelector("#nav-p").style.display = "block";
-    document.querySelector("footer").style.display = "block";
-    document.querySelector("#main-cont").classList = "container";
-    axios.put(
-      `https://rocky-lake-08170.herokuapp.com/api/tocken/used/${match.params.tocken}`
-    );
+    axios.put(`http://localhost:8000/api/tocken/used/${match.params.tocken}`);
     history.push("/admin");
   };
 

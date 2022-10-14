@@ -1,13 +1,14 @@
 import axios from "axios";
 import React, { useState, useRef } from "react";
 import { Container, Alert, Form, Card, Button, Row } from "react-bootstrap";
-import { useAuth } from "../../contexts/AuthContext";
+import { useSelector } from "react-redux";
+import { createUseStyles } from "react-jss";
 
 const ContactUs = ({ history }) => {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
-  const { currentUser } = useAuth();
+  const { currentUser } = useSelector((state) => state.currentUser);
 
   const emailRef = useRef();
   const nameRef = useRef();
@@ -33,7 +34,7 @@ const ContactUs = ({ history }) => {
       setError("We Need All Fields For This Operation");
     } else {
       axios
-        .post(`https://rocky-lake-08170.herokuapp.com/api/ticket/new-ticket`, {
+        .post(`http://localhost:8000/api/ticket/new-ticket`, {
           key: process.env.REACT_APP_API_KEY,
           name: nameRef.current.value,
           email: emailRef.current.value,
@@ -54,6 +55,26 @@ const ContactUs = ({ history }) => {
     }
   };
 
+  const useStyles = createUseStyles({
+    nameFormGroup: {
+      width: "45%",
+      alignItems: "center",
+      justifyContent: "center",
+      "@media(max-width:570px)": {
+        width: "100%",
+        "&:hover": {},
+      },
+    },
+    emailFormGroup: {
+      width: "45%",
+      "@media(max-width:570px)": {
+        width: "100%",
+      },
+    },
+  });
+
+  const styles = useStyles();
+
   return (
     <div className="d-flex justify-content-center">
       <Container>
@@ -65,17 +86,12 @@ const ContactUs = ({ history }) => {
                 {error && <Alert variant="danger">{error}</Alert>}
                 {message && <Alert variant="success">{message}</Alert>}
                 <Row
-                  className=" d-flex flex-row"
-                  style={{ justifyContent: "space-between" , margin:'.1rem'}}
+                  className="d-flex flex-sm-row justify-content-sm-between flex-column "
+                  style={{
+                    margin: ".1rem",
+                  }}
                 >
-                  <Form.Group
-                    style={{
-                      width: "45%",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                    id="name"
-                  >
+                  <Form.Group className={styles.nameFormGroup} id="name">
                     <Form.Label>Name</Form.Label>
                     <Form.Control
                       type="Name"
@@ -84,7 +100,7 @@ const ContactUs = ({ history }) => {
                       required
                     />
                   </Form.Group>
-                  <Form.Group style={{ width: "45%" }} id="email">
+                  <Form.Group className={styles.emailFormGroup} id="email">
                     <Form.Label>Email</Form.Label>
                     <Form.Control
                       type="email"
@@ -104,8 +120,12 @@ const ContactUs = ({ history }) => {
                   <Form.Label>Message</Form.Label>
                   <Form.Control as="textarea" ref={messageRef} required />
                 </Form.Group>
-                <Button onClick={setTokenHandler} className="w-100">
-                  Submit{" "}
+                <Button
+                  onClick={setTokenHandler}
+                  className="w-100"
+                  disabled={!currentUser.haveContactToken}
+                >
+                  Submit
                 </Button>
               </Form>
             </Card.Body>

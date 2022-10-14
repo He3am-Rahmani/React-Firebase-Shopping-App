@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import {
   FooterAboutUs,
@@ -7,19 +7,32 @@ import {
 } from "./Footer-Components";
 import { createUseStyles } from "react-jss";
 import { useAuth } from "../../contexts/AuthContext";
-
+import { useSelector } from "react-redux";
 const NewFooter = () => {
-  const { currentUser } = useAuth();
+  const { currentUser } = useSelector((state) => state.currentUser);
 
   const [links, setLinks] = useState([
     { name: "Home", to: "/" },
     { name: "About Us", to: "/about" },
     { name: "Products", to: "/" },
     {
-      name: currentUser ? "Dashboard" : "Login/Sign-Up",
-      to: currentUser ? "/account" : "/login",
+      name: currentUser._id ? "Dashboard" : "Login/Sign-Up",
+      to: currentUser._id ? "/account" : "/login",
     },
   ]);
+
+  useEffect(() => {
+    const stateClone = [...links];
+
+    const newLink = {
+      name: currentUser._id ? "Dashboard" : "Login/Sign-Up",
+      to: currentUser._id ? "/account" : "/login",
+    };
+
+    stateClone.splice(3, 1, newLink);
+
+    setLinks(stateClone);
+  }, [currentUser._id]);
 
   const [medias, setMedias] = useState([
     { name: "instagram", href: "https://www.instagram.com/he3am_rahmani/" },
@@ -28,7 +41,7 @@ const NewFooter = () => {
       href: "https://www.linkedin.com/in/hesam-rahmani-5a2b871b7/",
     },
     { name: "github", href: "https://github.com/he3am-rahmani" },
-    { name: "twitter", href: "https://twitter.com/Re4l_no1" },
+    { name: "twitter", href: "https://twitter.com/Real_no1_" },
   ]);
   const useStyle = createUseStyles({
     footerParent: {

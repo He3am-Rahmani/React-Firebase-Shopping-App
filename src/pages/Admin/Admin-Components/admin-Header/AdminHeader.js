@@ -10,17 +10,16 @@ import { useHistory } from "react-router";
 
 import "./AdminHeader.css";
 
-const AdminHeader = (props) => {
+const AdminHeader = ({ adminInfo, exitAdmin }) => {
   const history = useHistory();
-  const { adminInfo } = props;
 
   useEffect(() => {}, [history]);
 
   return (
     <header id="nav" className="admin-nav-parent">
       <Navbar className="nav" variant="dark">
-        <Container>
-          <Navbar.Brand className="logo">AdMin Panel</Navbar.Brand>
+        <Container fluid>
+          <Navbar.Brand className="logo">Admin Panel</Navbar.Brand>
           <Nav style={{ gap: "1rem" }}>
             <OverlayTrigger
               key="bottom"
@@ -44,7 +43,7 @@ const AdminHeader = (props) => {
                 <Tooltip id={`tooltip-bottom`}>Logout AdminPanel</Tooltip>
               }
             >
-              <Nav.Link onClick={props.exitAdmin}>
+              <Nav.Link onClick={exitAdmin}>
                 <i id="home" className="fa fa-sign-out"></i>
               </Nav.Link>
             </OverlayTrigger>

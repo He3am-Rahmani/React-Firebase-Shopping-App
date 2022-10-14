@@ -24,51 +24,54 @@ export const ViewAndEditComments = ({
     <>
       <h2>View & Edit Comments</h2>
       <ListGroup ref={ref} variant="flush">
-        {comments.map((item, commentIndex) => (
-          <ListGroup.Item id={item._id} key={commentIndex}>
+        {comments.map((comment, commentIndex) => (
+          <ListGroup.Item id={comment._id} key={commentIndex}>
             <Row>
               <Col md={2}>
                 <Image
                   className={styles.avatar}
-                  src={item.photoURL ? item.photoURL : userPhoto}
-                  alt={item.name}
+                  src={comment.photoURL ? comment.photoURL : userPhoto}
+                  alt={comment.name}
                   fluid
                   rounded
                 />
               </Col>
-              <Col md={1}>{item.author}</Col>
-              <Col md={4}>{item.authorEmail}</Col>
-              <Col md={3}>{item.body}</Col>
+              <Col md={1}>{comment.author}</Col>
+              <Col md={4}>{comment.authorEmail}</Col>
+              <Col md={3}>{comment.body}</Col>
               <Col md={1}>
                 <Form.Switch
                   type="switch"
-                  id={`custom-switch-${item._id}`}
-                  checked={item.isVerified}
+                  id={`custom-switch-${comment._id}`}
+                  checked={comment.isVerified}
                   onClick={() => {
-                    setCommentVerified(item._id, item.isVerified);
+                    setCommentVerified(
+                      { id: comment._id, authorId: comment.authorId },
+                      comment.isVerified
+                    );
                     const selected = comments[commentIndex];
                     selected.isVerified = !comments[commentIndex].isVerified;
-                    console.log(comments[commentIndex]);
                     comments[commentIndex] = selected;
-                    console.log(comments[commentIndex]);
-                    console.log(selected);
                   }}
                 />
               </Col>
               <Col md={1}>
                 <i
                   onClick={() => {
-                    removeCommentsHandler(item._id, commentIndex);
+                    removeCommentsHandler(
+                      { id: comment._id, authorId: comment.authorId },
+                      commentIndex
+                    );
                   }}
                   style={{ cursor: "pointer" }}
                   className="text-danger fa fa-trash"
                 ></i>
               </Col>
             </Row>
-            {item.replys.length !== 0 ? (
+            {comment.replys.length !== 0 ? (
               <Col>
                 <h4>Replys</h4>
-                {item.replys.map((reply, replyIndex) => (
+                {comment.replys.map((reply, replyIndex) => (
                   <Row>
                     <Col md={2}>
                       <Image
@@ -89,17 +92,21 @@ export const ViewAndEditComments = ({
                         checked={reply.isVerified}
                         onClick={() => {
                           setReplyVerified(
-                            item._id,
-                            reply._id,
+                            {
+                              commentId: comment._id,
+                              replyId: reply._id,
+                              commentAuthorId: comment.authorId,
+                              authorId: reply.authorId,
+                            },
                             reply.isVerified
                           );
                           // const selected = comments[replyIndex];
                           // console.log(comments[replyIndex]);
                           // console.log(comments[replyIndex]);
-                          const selected = item.replys[replyIndex];
+                          const selected = comment.replys[replyIndex];
                           selected.isVerified =
-                            !item.replys[replyIndex].isVerified;
-                          item.replys[replyIndex] = selected;
+                            !comment.replys[replyIndex].isVerified;
+                          comment.replys[replyIndex] = selected;
                         }}
                       />
                     </Col>
@@ -107,8 +114,10 @@ export const ViewAndEditComments = ({
                       <i
                         onClick={() => {
                           removeReplysHandler(
-                            item._id,
+                            comment._id,
                             reply._id,
+                            comment.authorId,
+                            reply.authorId,
                             commentIndex,
                             replyIndex
                           );

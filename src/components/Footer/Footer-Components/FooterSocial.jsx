@@ -9,6 +9,9 @@ const FooterSocial = ({ medias }) => {
       justifyContent: "center",
       alignItems: "center",
       gap: "3rem",
+      "@media(max-width:570px)": {
+        gap: "2rem",
+      },
     },
     mediasCover: {
       backgroundColor: "#f3f3f3",

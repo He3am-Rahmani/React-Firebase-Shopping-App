@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import image from "././images/404.jpg";
 import "./nfPage.css";
 
 const NfPage = () => {
-  document.title = 'Page Not Founf'
+  document.title = "Page Not Founf";
+
+  useEffect(() => {
+    
+  }, []);
 
   return (
     <>

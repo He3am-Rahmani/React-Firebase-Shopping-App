@@ -1,9 +1,16 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import { createUseStyles } from "react-jss";
+import { useDispatch, useSelector } from "react-redux";
+import { userLoginAction } from "../action/userAction";
+import { useState as useHookState } from "@hookstate/core";
+
 export default function Login() {
+  const dispatch = useDispatch();
+
+  const [counter, setCounter] = useState();
   const emailRef = useRef();
   const passwordRef = useRef();
   const { login, user } = useAuth();
@@ -11,11 +18,9 @@ export default function Login() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-  const { currentUser } = useAuth();
-  if (currentUser) {
-    history.push("/dashboard");
-  }
+  const { currentUser } = useSelector((state) => state.currentUser);
   document.title = "Login";
+
   const useStyles = createUseStyles({
     content: {
       width: "100%",
@@ -25,29 +30,43 @@ export default function Login() {
     card: {
       margin: "1rem auto",
       width: "50%",
-      "@media(max-width:430px)": { width: "100%" },
+      "@media(max-width:570px)": { width: "100%" },
     },
   });
-  // const displayName = useSelector((state) => state.displayName);
-  // const email = useSelector((state) => state.email);
-  // const photoURL = useSelector((state) => state.photoURL);
+
+  if (currentUser._id) {
+    history.push("/dashboard");
+  }
+  useEffect(() => {
+    if (currentUser._id) {
+      history.push("/dashboard");
+    }
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
-
     try {
       setError("");
       setLoading(true);
+      const { data, message } = await dispatch(
+        userLoginAction(emailRef.current.value, passwordRef.current.value)
+      );
 
-      await login(emailRef.current.value, passwordRef.current.value);
-      // dispatch(login(emailRef.current.value, passwordRef.current.value));
+      message.type === "failed"
+        ? setError(message.message)
+        : setMessage(message.message);
+      if (message.type === "failed") throw new Error(message.message);
 
-      // setMessage("Logged In Redirect Operation ...");
-      // setTimeout(() => {
-      // history.push("");
-      // }, 2300);
-    } catch {
-      setError("Failed to log in");
+      console.log("reached To Redirect");
+
+      if (message.type === "success") {
+        setLoading(true);
+        // setTimeout(() => {
+          history.push("/dashboard");
+        // }, 3000);
+      }
+    } catch (error) {
+      console.log(error.message);
     }
 
     setLoading(false);

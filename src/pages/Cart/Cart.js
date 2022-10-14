@@ -25,8 +25,10 @@ const Cart = ({ match, history }) => {
 
   const dispatch = useDispatch();
 
-  const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
+  const { cartItems } = useSelector((state) => state.cart);
+
+  console.log(cartItems);
+  // const cartItems = [];
   const [totalPrice, setTotalPrice] = useState(0);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -35,18 +37,15 @@ const Cart = ({ match, history }) => {
   let showDiscount = <></>;
 
   useEffect(() => {
-    if (productId) {
-      dispatch(addToCart(productId));
-      history.push("/cart");
-    }
+   
     let redTotalPrice = cartItems.reduce(
       (acc, item) => Number(acc) + Number(item.price),
       ""
-      );
-      setTotalPrice(redTotalPrice);
-      document.title = 'Cart'
+    );
+    setTotalPrice(redTotalPrice);
+    document.title = "Cart";
   }, [dispatch, match, productId, cartItems, history]);
- 
+
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
   };
@@ -67,7 +66,7 @@ const Cart = ({ match, history }) => {
       if (discRef.current.value !== "") {
         axios
           .post(
-            `https://rocky-lake-08170.herokuapp.com/api/discount/check/${discRef.current.value}`,
+            `http://localhost:8000/api/discount/check/${discRef.current.value}`,
             { key: process.env.REACT_APP_API_KEY }
           )
           .then((Response) => {
@@ -110,7 +109,10 @@ const Cart = ({ match, history }) => {
             {" "}
             {totalPrice} Mil
           </span>{" "}
-          -&gt; <span style={{ color: "#12c942" }}>{Math.round(afterDisPrice)} Mil</span>
+          -&gt;{" "}
+          <span style={{ color: "#12c942" }}>
+            {Math.round(afterDisPrice)} Mil
+          </span>
         </>
       );
     } else {
@@ -174,7 +176,7 @@ const Cart = ({ match, history }) => {
             </ListGroup>
           </Card>
 
-          <Form
+          <div
             inline
             style={{ marginTop: "1rem" }}
             className="d-flex flex-row gap-1"
@@ -207,7 +209,7 @@ const Cart = ({ match, history }) => {
                 </InputGroup.Append>
               </InputGroup>
             )}
-          </Form>
+          </div>
         </Col>
         <Col className="d-flex flex-row-reverse justify-content">
           <Button

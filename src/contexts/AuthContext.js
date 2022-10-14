@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebase";
-
+import { useState as useHookState } from "@hookstate/core";
+import userStore from "../userStore";
 const AuthContext = React.createContext();
 
 export function useAuth() {
@@ -8,8 +9,9 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState();
+  const [currentUser, setCurrentUser] = useState({});
   const [loading, setLoading] = useState(true);
+  const userState = useHookState(userStore);
 
   function signup(email, password, userName) {
     return auth.createUserWithEmailAndPassword(email, password).then((user) => {
@@ -19,8 +21,19 @@ export function AuthProvider({ children }) {
     });
   }
 
-  const login = async (email, password) =>
-    auth.signInWithEmailAndPassword(email, password);
+  const login = async (email, password) => {
+    // console.log("signin function called ");
+    // console.log('currentUser Logged');
+    const { user } = await auth.signInWithEmailAndPassword(email, password);
+    setCurrentUser(user);
+    userState.set({
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      phoneNumber: user.phoneNumber,
+      email: user.email,
+    });
+    return { data: currentUser, type: "success" };
+  };
 
   const logout = () => auth.signOut();
 

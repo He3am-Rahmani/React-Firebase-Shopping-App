@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
-  Col,
-  Row,
   Image,
   Button,
-  ListGroup,
   Modal,
   ModalBody,
   Spinner,
@@ -14,36 +11,45 @@ import { Link } from "react-router-dom";
 import NfPage from "../404Page/nfPage";
 import { Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { productDetailAction } from "../../action/ProductAction";
+import {
+  productDetailAction,
+  formatProductDetails,
+} from "../../action/ProductAction";
 import { createUseStyles } from "react-jss";
-import { useAuth } from "../../contexts/AuthContext";
 import Comments from "../../components/Comments/Comments";
-
-import "./ProductPage.css";
+import { addToCart } from "../../action/cartAction";
 import axios from "axios";
 import Reply from "../../components/Reply/Reply";
+import { IoChevronBack } from "react-icons/io5";
 
 const ProductPage = ({ history, match }) => {
+  const [productMessage, setProductMessage] = useState("");
+  const [productError, setProductError] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
-  const { currentUser } = useAuth();
+  // const { currentUser } = useAuth();
   const commentRef = useRef("");
   const replyRef = useRef("");
 
   const [comments, setComments] = useState([]);
-  const [replys, setReplys] = useState([]);
 
-  const productDetail = useSelector((state) => state.productDetail);
-
+  const { productDetail } = useSelector((state) => state);
+  const userData = useSelector((state) => state.currentUser);
   const { loading, product } = productDetail;
+
+  const { currentUser } = userData;
 
   const useStyles = createUseStyles({
     backButton: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "flex-start",
+      alignItems: "center",
       "&:hover": {
         textDecoration: "none",
-        color: "#000",
+        color: "#e1e1e1e1e1",
       },
     },
     content: {
@@ -83,7 +89,7 @@ const ProductPage = ({ history, match }) => {
       gap: "2rem",
       alignItems: "center",
       // alignContent:'center',
-      "@media(max-width:430px)": {
+      "@media(max-width:570px)": {
         flexDirection: "column",
       },
     },
@@ -94,7 +100,7 @@ const ProductPage = ({ history, match }) => {
       justifyContent: "center",
       gap: ".5rem",
       width: "50%",
-      "@media(max-width:430px)": {
+      "@media(max-width:570px)": {
         gap: "2rem",
         justifyContent: "center",
         width: "100%",
@@ -110,19 +116,36 @@ const ProductPage = ({ history, match }) => {
         justifyContent: "center",
         marginTop: "3rem",
       },
-      "@media(max-width:430px)": {
+      "@media(max-width:570px)": {
         gap: "4rem",
         justifyContent: "space-between",
       },
     },
+    imageHolder: {
+      width: "100%",
+    },
     image: {
-      width: "75%",
+      width: "50%",
       height: "75%",
-      "@media(max-width:430px)": {
+      "@media(max-width:570px)": {
         width: "100%",
       },
     },
   });
+
+  if (
+    error !== "" ||
+    message !== "" ||
+    productError !== "" ||
+    productMessage !== ""
+  )
+    setTimeout(() => {
+      setError("");
+      setMessage("");
+      setProductError("");
+      setProductMessage("");
+      setShowModal(false);
+    }, 5000);
 
   const styles = useStyles();
 
@@ -130,27 +153,56 @@ const ProductPage = ({ history, match }) => {
     dispatch(productDetailAction(match.params.id));
     document.title = product.name;
 
+    return () => {
+      dispatch(formatProductDetails());
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
     axios
-      .post(`https://rocky-lake-08170.herokuapp.com/api/comment/get-specefic`, {
+      .post(`http://localhost:8000/api/comment/get-specefic`, {
         key: process.env.REACT_APP_API_KEY,
         product: product._id,
       })
       .then(({ data }) => {
         setComments(data.data);
       });
-  }, [match, dispatch, product.name, product._id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product]);
 
-  const addHandler = () => {
-    setMessage("Product Added To your Cart Successfully");
-    history.push(`/cart/${product._id}`);
+  const addHandler = async () => {
+    if (currentUser._id) {
+      console.log(currentUser);
+      const { data } = await dispatch(addToCart(currentUser._id, product));
+      console.log(
+        "AddToCartActionCalled Response In Product Component ==>",
+        data
+      );
+      if (data.message.type === "success") {
+        setProductMessage(data.message.message);
+      } else {
+        setError(data.message.message);
+      }
+    } else {
+      setProductError(
+        <>
+          <p>
+            For Add Products To Cart You Have To{" "}
+            <Link to="/login">Login/Signup</Link>
+          </p>
+        </>
+      );
+    }
+    // history.push(`/cart/${product._id}`);
   };
 
   const addCommentHandler = () => {
-    if (currentUser) {
+    if (currentUser._id) {
       if (commentRef.current.value !== "") {
         axios
-          .post(`https://rocky-lake-08170.herokuapp.com/api/comment/create`, {
+          .post(`http://localhost:8000/api/comment/create`, {
             key: process.env.REACT_APP_API_KEY,
+            authorId: currentUser._id,
             author: currentUser.displayName,
             authorEmail: currentUser.email,
             body: commentRef.current.value,
@@ -158,57 +210,54 @@ const ProductPage = ({ history, match }) => {
             product: product._id,
           })
           .then(({ data }) => {
-            setShowModal(true);
-            if (data.message.type === "success") {
-              setMessage(data.message.message);
-              commentRef.current.value = "";
-            } else {
-              setMessage(data.message.message);
-            }
+            console.log(data);
+            // setShowModal(true);
+            // if (data.message.type === "success") {
+            //   setMessage(data.message.message);
+            //   commentRef.current.value = "";
+            // } else {
+            //   setMessage(data.message.message);
+            // }
           });
       } else {
         setError("Fill Out All Fields");
-        setTimeout(() => {
-          setError("");
-        }, 5000);
       }
     } else {
-      setShowModal(true);
-      setError("For Leaving Comments You Have To login");
+      setError(
+        <>
+          <p style={{ margin: "0" }}>
+            For Leaving Comments You Have To <Link to="/login">Login</Link>
+          </p>
+        </>
+      );
     }
   };
 
   const addReplyHandler = (item) => {
-    if (currentUser) {
-      console.log(replyRef.current);
+    if (currentUser._id) {
       if (replyRef.current.value !== "") {
-        console.log("sending Data Called");
         axios
-          .post(
-            `https://rocky-lake-08170.herokuapp.com/api/comment/add-reply`,
-            {
-              key: process.env.REACT_APP_API_KEY,
-              commentId: item._id,
-              author: currentUser.displayName,
-              body: replyRef.current.value,
-              email: currentUser.email,
-              photoURL: currentUser.photoURL,
-            }
-          )
+          .post(`http://localhost:8000/api/comment/add-reply`, {
+            key: process.env.REACT_APP_API_KEY,
+            commentId: item._id,
+            author: currentUser.displayName,
+            commentAuthorId: item.authorId,
+            authorId: currentUser._id,
+            body: replyRef.current.value,
+            email: currentUser.email,
+            photoURL: currentUser.photoURL,
+          })
           .then((response) => {
-            setShowModal(true);
-            setMessage(response.data.message.message);
-            replyRef.current.value = "";
+            console.log(response);
+            // setShowModal(true);
+            // setMessage(response.data.message.message);
+            // replyRef.current.value = "";
           });
       } else {
         setError("Please Fill Out Reply Field To Reply");
-        setTimeout(() => {
-          setError("");
-        }, 5000);
       }
     } else {
-      setShowModal(true);
-      setError("For Leaving Comments You Have To login");
+      setError("For Leaving Reply You Have To login");
     }
   };
 
@@ -255,12 +304,12 @@ const ProductPage = ({ history, match }) => {
       : (show = (
           <div>
             <Link className={styles.backButton} to="/">
-              <i className="back-btn fa fa-arrow-left"></i> Back To Home Page
+              <IoChevronBack /> Back To Home Page
             </Link>
 
             <div className={styles.content}>
               <div className={styles.split}>
-                <div className={styles.imageHolders}>
+                <div className={styles.imageHolder}>
                   <Image
                     className={styles.image}
                     style={{ marginTop: "3rem" }}
@@ -269,7 +318,12 @@ const ProductPage = ({ history, match }) => {
                 </div>
                 {/* <Col md="7" sm="12"> */}
                 <div className={styles.productsDescriptions}>
-                  {message && <Alert variant="success">{message}</Alert>}
+                  {productMessage && (
+                    <Alert variant="success">{productMessage}</Alert>
+                  )}
+                  {productError && (
+                    <Alert variant="danger">{productError}</Alert>
+                  )}
                   <div className={styles.description}>
                     <h5>
                       <strong>Name:</strong>
@@ -306,7 +360,10 @@ const ProductPage = ({ history, match }) => {
                 style={{ width: "100%", textAlign: "center" }}
               >
                 <Modal.Header closeButton>
-                  <Modal.Title>Comment Submitted</Modal.Title>
+                  <Modal.Title>
+                    {error && <>Error</>}
+                    {message && <>Success</>}
+                  </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   {error && <Alert variant="danger">{error}</Alert>}
@@ -325,6 +382,7 @@ const ProductPage = ({ history, match }) => {
                 <div className={styles.commentsLabel}>Comments</div>
                 <div className={styles.addComment}>
                   {error && <Alert variant="danger">{error}</Alert>}
+                  {message && <Alert variant="success">{message}</Alert>}
                   <Form.Control
                     as="textarea"
                     className={styles.commentInput}
@@ -338,32 +396,27 @@ const ProductPage = ({ history, match }) => {
                     Post
                   </Button>
                 </div>
-                {comments.map((item) => {
-                  if (item.isVerified) {
-                    return (
-                      <div>
-                        <Comments
-                          refChange={() => {
-                            console.log(replyRef.current.value);
-                          }}
-                          comment={item}
-                          addReplyHandler={() => addReplyHandler(item)}
-                          refs={{
-                            replyRef: replyRef,
-                          }}
-                        >
-                          {item.replys.length !== 0
-                            ? item.replys.map((reply) =>
-                                reply.isVerified ? (
-                                  <Reply reply={reply} />
-                                ) : null
-                              )
-                            : null}
-                        </Comments>
-                      </div>
-                    );
-                  }
-                })}
+                {comments.map((item) =>
+                  item.isVerified ? (
+                    <div>
+                      <Comments
+                        comment={item}
+                        addReplyHandler={() => addReplyHandler(item)}
+                        refs={{
+                          replyRef: replyRef,
+                        }}
+                      >
+                        {item.replys.length !== 0
+                          ? item.replys.map((reply) =>
+                              reply.isVerified ? <Reply reply={reply} /> : null
+                            )
+                          : null}
+                      </Comments>
+                    </div>
+                  ) : (
+                    <></>
+                  )
+                )}
               </div>
             </div>
           </div>

@@ -11,7 +11,7 @@ const FooterQuickLinks = ({ links }) => {
       justifyContent: "center",
       gap: "1rem",
       alignItems: "center",
-      "@media(max-width:430px)": { display: "none" },
+      "@media(max-width:570px)": { display: "none" },
     },
     links: {
       borderRadius: "12px",
