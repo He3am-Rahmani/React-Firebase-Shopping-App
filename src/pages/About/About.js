@@ -2,7 +2,7 @@ import { useState } from "@hookstate/core";
 import React from "react";
 import { Image, Container } from "react-bootstrap";
 import { createUseStyles } from "react-jss";
-import myImage from "../../Assets/images/hesam-rahmani.JPG";
+import myImage from "../../Assets/images/hesam-rahmani.jpg";
 import userStore from "../../userStore";
 
 const About = () => {

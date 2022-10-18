@@ -5,7 +5,7 @@ import axios from "axios";
 export const userLoginAction = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: "USER_LOGIN_REQUEST" });
-    const { data } = await axios.post("http://localhost:8000/api/login", {
+    const { data } = await axios.post("https://no1-shop.herokuapp.com/api/login", {
       key: "WHO_THE_HELL_IS_NO1",
       email: email,
       password: password,
@@ -61,7 +61,7 @@ export const createUserAction =
     let userData;
     try {
       dispatch({ type: "USER_CREATE_NEW_USER_REQUEST" });
-      const { data } = await axios.post("http://localhost:8000/api/signup", {
+      const { data } = await axios.post("https://no1-shop.herokuapp.com/api/signup", {
         key: "WHO_THE_HELL_IS_NO1",
         userName: userName,
         email: email,
@@ -97,7 +97,7 @@ export const updateUserProfileAction =
     try {
       dispatch({ type: "REQUEST_UPDATE_PROFILE" });
       const { data } = await axios.post(
-        "http://localhost:8000/api/update-profile",
+        "https://no1-shop.herokuapp.com/api/update-profile",
         {
           key: "WHO_THE_HELL_IS_NO1",
           actionType: "UPDATE_PROFILE",

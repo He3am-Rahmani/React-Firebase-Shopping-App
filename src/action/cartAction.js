@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const addToCart = (userId, product) => async (dispatch, getState) => {
   const data = await axios.post(
-    "http://localhost:8000/api/add-product-to-cart",
+    "https://no1-shop.herokuapp.com/api/add-product-to-cart",
     {
       key: "WHO_THE_HELL_IS_NO1",
       userId: userId,
@@ -32,7 +32,7 @@ export const removeFromCart = (id) => (dispatch, getState) => {
 
 export const viewCart = () => async (dispatch, getState) => {
   const { data } = await axios.get(
-    `http://localhost:8000/api/products/`
+    `https://no1-shop.herokuapp.com/api/products/`
   );
 
   dispatch({

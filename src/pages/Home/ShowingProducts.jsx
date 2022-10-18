@@ -29,7 +29,8 @@ const ShowingProducts = ({
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      padding: "8px 16px",
+      padding: "3px 16px 3px 11px",
+      cursor: "text",
       border: "1px solid #c3c3c380",
       borderRadius: "50px",
     },
@@ -38,21 +39,47 @@ const ShowingProducts = ({
       border: "none",
       outline: "none",
       color: "#007bffd0",
+      cursor: "text",
       background: "transparent",
-      ":-ms-input-placeholder": {
+      "&:-ms-input-placeholder": {
         color: "#007bffd0",
       },
-      "::-ms-input-placeholder": {
+      "&::-ms-input-placeholder": {
         color: "#007bffd0",
       },
-      "::placeholder": {
+      "&::placeholder": {
         color: "#007bffd0",
+      },
+    },
+    searchIconContainer: {
+      margin: "0",
+      padding: "5px",
+      color: "#007bffd0",
+      display: "flex",
+      marginRight: "5px",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: "10",
+      cursor: "text",
+      borderRadius: "50%",
+      "&:hover": {
+        transition: "all ease 1.5s",
+        backgroundColor: "#007bff20",
       },
     },
     searchIcon: {
       fontSize: "1.5rem",
-      marginRight: "5px",
-      color: "#007bffd0",
+    },
+    searchRemoveFilterIconContainer: {
+      color: "#e8103d",
+      cursor: "pointer",
+      borderRadius: "50%",
+      fontSize: "1.6rem",
+      padding: "3px",
+      "&:hover": {
+        transition: "all ease 1.5s",
+        backgroundColor: "#e8103d20",
+      },
     },
   });
 
@@ -71,7 +98,9 @@ const ShowingProducts = ({
           <></>
         )}
         <label className={styles.searchContainer} for="search">
-          <IoIosSearch className={styles.searchIcon} />
+          <label className={styles.searchIconContainer} for="search">
+            <IoIosSearch className={styles.searchIcon} />
+          </label>
           <input
             id="search"
             className={styles.searchInput}
@@ -85,7 +114,16 @@ const ShowingProducts = ({
               setCurrentPage(1);
             }}
           />
-          {keyword ? <></> : <></>}
+          {keyword ? (
+            <div
+              className={styles.searchRemoveFilterIconContainer}
+              onClick={() => setKeyword("")}
+            >
+              <IoCloseOutline />
+            </div>
+          ) : (
+            <></>
+          )}
         </label>
       </Form>
       {filterdProducts.length === 0 && keyword ? (

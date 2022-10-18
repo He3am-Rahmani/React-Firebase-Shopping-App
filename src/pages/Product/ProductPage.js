@@ -160,7 +160,7 @@ const ProductPage = ({ history, match }) => {
   }, []);
   useEffect(() => {
     axios
-      .post(`http://localhost:8000/api/comment/get-specefic`, {
+      .post(`https://no1-shop.herokuapp.com/api/comment/get-specefic`, {
         key: process.env.REACT_APP_API_KEY,
         product: product._id,
       })
@@ -200,7 +200,7 @@ const ProductPage = ({ history, match }) => {
     if (currentUser._id) {
       if (commentRef.current.value !== "") {
         axios
-          .post(`http://localhost:8000/api/comment/create`, {
+          .post(`https://no1-shop.herokuapp.com/api/comment/create`, {
             key: process.env.REACT_APP_API_KEY,
             authorId: currentUser._id,
             author: currentUser.displayName,
@@ -211,13 +211,13 @@ const ProductPage = ({ history, match }) => {
           })
           .then(({ data }) => {
             console.log(data);
-            // setShowModal(true);
-            // if (data.message.type === "success") {
-            //   setMessage(data.message.message);
-            //   commentRef.current.value = "";
-            // } else {
-            //   setMessage(data.message.message);
-            // }
+            setShowModal(true);
+            if (data.message.type === "success") {
+              setMessage(data.message.message);
+              commentRef.current.value = "";
+            } else {
+              setMessage(data.message.message);
+            }
           });
       } else {
         setError("Fill Out All Fields");
@@ -237,7 +237,7 @@ const ProductPage = ({ history, match }) => {
     if (currentUser._id) {
       if (replyRef.current.value !== "") {
         axios
-          .post(`http://localhost:8000/api/comment/add-reply`, {
+          .post(`https://no1-shop.herokuapp.com/api/comment/add-reply`, {
             key: process.env.REACT_APP_API_KEY,
             commentId: item._id,
             author: currentUser.displayName,

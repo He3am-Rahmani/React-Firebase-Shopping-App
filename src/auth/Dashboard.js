@@ -504,9 +504,8 @@ const Comment = ({ comments }) => {
               {!comment?.replys?.length !== 0 && comment.isComment && (
                 <div className={styles.showReplysButtonContainer}>
                   <button
-                    className={`${styles.showReplysButton} ${
-                      showReplys && styles.showReplysButtonActive
-                    }`}
+                    className={`${styles.showReplysButton} ${showReplys &&
+                      styles.showReplysButtonActive}`}
                     onClick={() => {
                       setShowReplys(!showReplys);
                     }}

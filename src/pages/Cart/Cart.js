@@ -66,7 +66,7 @@ const Cart = ({ match, history }) => {
       if (discRef.current.value !== "") {
         axios
           .post(
-            `http://localhost:8000/api/discount/check/${discRef.current.value}`,
+            `https://no1-shop.herokuapp.com/api/discount/check/${discRef.current.value}`,
             { key: process.env.REACT_APP_API_KEY }
           )
           .then((Response) => {
